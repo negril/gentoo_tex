@@ -4,7 +4,7 @@
 EAPI=8
 
 TL_SOURCE_VERSION=20230311
-
+WITH_BINEXTRA=1
 inherit flag-o-matic toolchain-funcs libtool texlive-common
 
 MY_P=${PN%-core}-${TL_SOURCE_VERSION}-source
@@ -263,6 +263,7 @@ TL_CORE_EXTRA_SRC_MODULES="
 	${TL_CORE_BINEXTRA_SRC_MODULES}
 "
 
+if [[ $WITH_BINEXTRA -gt 0 ]]; then
 for i in ${TL_CORE_EXTRA_MODULES}; do
 	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
 done
@@ -277,6 +278,7 @@ for i in ${TL_CORE_EXTRA_SRC_MODULES}; do
 	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
 done
 SRC_URI="${SRC_URI} )"
+fi
 
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
 IUSE="cjk X doc source tk +luajittex xetex xindy"
@@ -342,12 +344,13 @@ RDEPEND="
 	)
 "
 
-S="${WORKDIR}/${P}_build"
-B="${WORKDIR}/${MY_P}"
+S="${WORKDIR}/${MY_P}"
+BUILDDIR="${WORKDIR}/${P}_build"
 
 src_unpack() {
-	unpack ${A}
-	mkdir -p "${S}" || die "failed to create build dir"
+	default
+
+	mkdir -p "${BUILDDIR}" || die "failed to create build dir"
 }
 
 RELOC_TARGET=texmf-dist
@@ -355,6 +358,7 @@ RELOC_TARGET=texmf-dist
 src_prepare() {
 	cd "${WORKDIR}" || die
 
+	if [[ $WITH_BINEXTRA -gt 0 ]]; then
 	# mv texlive.tlpdb tlpkg/ || die "failed to move texlive.tlpdb"
 
 	# From texlive-module.eclass.
@@ -366,13 +370,12 @@ src_prepare() {
 	while read -r i; do
 		mv "${i}" "${RELOC_TARGET}/${i%/*}" || die
 	done < "${T}/reloclist"
-
-	mv "${WORKDIR}"/texmf* "${B}" || die "failed to move texmf files"
-
-	cd "${B}" || die
+	mv "${WORKDIR}"/texmf* "${S}" || die "failed to move texmf files"
+	fi
+	cd "${S}" || die
 
 	sed -i \
-		-e "s,/usr/include /usr/local/include.*echo \$KPATHSEA_INCLUDES.*,${EPREFIX}/usr/include\"," \
+		-e "s,/usr/include /usr/local/include.*echo \$KPATHSEA_INCLUDES.*,$(pkg-config kpathsea --variable=includedir)\"," \
 		texk/web2c/configure || die
 
 	# eapply "${WORKDIR}"/patches
@@ -386,7 +389,7 @@ src_prepare() {
 	elibtoolize
 
 	# Drop this on 2022 bump!
-	"${B}"/reautoconf libs/cairo || die
+	"${S}"/reautoconf libs/cairo || die
 }
 
 src_configure() {
@@ -463,22 +466,22 @@ src_configure() {
 		--disable-build-in-source-tree
 		--disable-xindy-docs
 		--disable-xindy-rules
-		$(use_enable luajittex)
-		$(use_enable luajittex luajithbtex)
-		$(use_enable luajittex mfluajit)
-		$(use_enable xetex)
-		$(use_enable cjk dviout-util)
-		$(use_enable cjk ptex)
-		$(use_enable cjk eptex)
-		$(use_enable cjk uptex)
-		$(use_enable cjk euptex)
-		$(use_enable cjk mendexk)
-		$(use_enable cjk makejvf)
-		$(use_enable cjk pmp)
-		$(use_enable cjk upmp)
-		$(use_enable tk texdoctk)
-		$(use_with X x)
-		$(use_enable xindy)
+		"$(use_enable luajittex)"
+		"$(use_enable luajittex luajithbtex)"
+		"$(use_enable luajittex mfluajit)"
+		"$(use_enable xetex)"
+		"$(use_enable cjk dviout-util)"
+		"$(use_enable cjk ptex)"
+		"$(use_enable cjk eptex)"
+		"$(use_enable cjk uptex)"
+		"$(use_enable cjk euptex)"
+		"$(use_enable cjk mendexk)"
+		"$(use_enable cjk makejvf)"
+		"$(use_enable cjk pmp)"
+		"$(use_enable cjk upmp)"
+		"$(use_enable tk texdoctk)"
+		"$(use_with X x)"
+		"$(use_enable xindy)"
 
 		--enable-autosp=yes
 		--enable-axodraw2=yes
@@ -505,27 +508,30 @@ src_configure() {
 		--enable-ttfdump=yes
 		--enable-upmendex=yes
 		--enable-texlive=yes
-
+ # web2c afm2pl chktex detex dtl dvi2tty dvidvi dviljk dviout-util dvipdfm-x dvipos gregorio gsftopk makeindexk makejvf mendexk musixtnt seetexk ttfdump upmendex texlive
 	)
-	ECONF_SOURCE="${B}" \
+	cd "${BUILDDIR}" || die
+	ECONF_SOURCE="${S}" \
 		econf -C \
 		--bindir="${EPREFIX}"/usr/bin \
-		--datadir="${S}" \
+		--datadir="${BUILDDIR}" \
 		--with-banner-add=" Gentoo Linux" \
 		"${myconf[@]}"
 }
 
 src_compile() {
+	cd "${BUILDDIR}" || die
 	tc-export CC CXX AR RANLIB
 
 	emake AR="$(tc-getAR)" SHELL="${EPREFIX}"/bin/sh texmf="${EPREFIX}"${TEXMF_PATH:-/usr/share/texmf-dist}
 
-	cd "${B}" || die
+	if [[ "${WITH_BINEXTRA}" -gt 0 ]]; then
+	cd "${S}" || die
 	# Mimic updmap --syncwithtrees to enable only fonts installed
 	# Code copied from updmap script
-	for i in `grep -E '^(Mixed|Kanji)?Map' "texmf-dist/web2c/updmap.cfg" | sed 's@.* @@'`; do
+	while read -r i; do
 		texlive-common_is_file_present_in_texmf "${i}" || echo "${i}"
-	done > "${T}/updmap_update"
+	done > "${T}/updmap_update" < <(grep -E '^(Mixed|Kanji)?Map' "texmf-dist/web2c/updmap.cfg" | sed 's@.* @@')
 	{
 		sed 's@/@\\/@g; s@^@/^MixedMap[     ]*@; s@$@$/s/^/#! /@' <"${T}/updmap_update"
 		sed 's@/@\\/@g; s@^@/^Map[  ]*@; s@$@$/s/^/#! /@' <"${T}/updmap_update"
@@ -533,14 +539,16 @@ src_compile() {
 	} > "${T}/updmap_update2"
 	sed -f "${T}/updmap_update2" "texmf-dist/web2c/updmap.cfg" >	"${T}/updmap_update3"\
 		&& cat "${T}/updmap_update3" > "texmf-dist/web2c/updmap.cfg"
+	fi
 }
 
 src_install() {
+	cd "${BUILDDIR}" || die
 	dodir ${TEXMF_PATH:-/usr/share/texmf-dist}/web2c
 
 	emake DESTDIR="${D}" texmf="${ED}${TEXMF_PATH:-/usr/share/texmf-dist}" run_texlinks="true" run_mktexlsr="true" install
 
-	cd "${B}" || die
+	cd "${S}" || die
 	dodir /usr/share # just in case
 	cp -pR texmf-dist "${ED}/usr/share/" || die "failed to install texmf trees"
 	cp -pR "${WORKDIR}"/tlpkg "${ED}/usr/share/" || die "failed to install tlpkg files"
@@ -550,19 +558,19 @@ src_install() {
 	use X || dosym mf /usr/bin/mf-nowin
 
 	docinto texk
-	cd "${B}/texk" || die
+	cd "${S}/texk" || die
 	dodoc ChangeLog README
 
 	docinto dviljk
-	cd "${B}/texk/dviljk" || die
+	cd "${S}/texk/dviljk" || die
 	dodoc ChangeLog README NEWS
 
 	docinto makeindexk
-	cd "${B}/texk/makeindexk" || die
+	cd "${S}/texk/makeindexk" || die
 	dodoc ChangeLog NOTES README
 
 	docinto web2c
-	cd "${B}/texk/web2c" || die
+	cd "${S}/texk/web2c" || die
 	dodoc ChangeLog NEWS PROJECTS README
 
 	use doc || rm -rf "${ED}/usr/share/texmf-dist/doc"
@@ -610,11 +618,12 @@ pkg_postinst() {
 
 	local display_migration_hint=false
 	if [[ -n ${REPLACING_VERSIONS} ]]; then
-		local new_texlive_ver=$(ver_cut 1)
+		local new_texlive_version
 		local replaced_version
+		new_texlive_version=$(ver_cut 1)
 		for replaced_version in ${REPLACING_VERSIONS}; do
-			replaced_version=$(ver_cut 1 ${replaced_version})
-			if (( replaced_version < new_texlive_version )); then
+			replaced_version=$(ver_cut 1 "${replaced_version}")
+			if ver_test "${replaced_version}" -lt "${new_texlive_version}" ; then
 				display_migration_hint=true
 				break
 			fi
