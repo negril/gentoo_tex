@@ -25,8 +25,6 @@ TL_CORE_BINEXTRA_MODULES="
 	adhocfilelist.r29349
 	arara.r68431
 	asymptote.r67300
-	bibtex8.r66186
-	bibtexu.r66186
 	bundledoc.r64620
 	checklistings.r38300
 	chklref.r52649
@@ -130,8 +128,6 @@ TL_CORE_BINEXTRA_DOC_MODULES="
 	adhocfilelist.doc.r29349
 	arara.doc.r68431
 	asymptote.doc.r67300
-	bibtex8.doc.r66186
-	bibtexu.doc.r66186
 	bundledoc.doc.r64620
 	checklistings.doc.r38300
 	chklref.doc.r52649
