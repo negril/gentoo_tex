@@ -478,6 +478,7 @@ texlive-module_pkg_postrm() {
 
 fi
 
-unset COMMON_DEPEND PKGEXT RELOC_TARGET TEXLIVE_DEVS
+# for now
+# unset COMMON_DEPEND PKGEXT RELOC_TARGET TEXLIVE_DEVS
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install pkg_postinst pkg_postrm
