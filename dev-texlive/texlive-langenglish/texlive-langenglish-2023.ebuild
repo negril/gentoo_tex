@@ -1,0 +1,163 @@
+# Copyright 1999-2023 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI="8"
+
+TEXLIVE_MODULE_CONTENTS="
+	amiweb2c-guide.r56878
+	amscls-doc.r46110
+	amslatex-primer.r28980
+	around-the-bend.r15878
+	ascii-chart.r20536
+	biblatex-cheatsheet.r44685
+	collection-basic.r59159
+	components.r63184
+	comprehensive.r59099
+	dickimaw.r32925
+	docsurvey.r61447
+	drawing-with-metapost.r66846
+	dtxtut.r38375
+	first-latex-doc.r15878
+	fontinstallationguide.r59755
+	forest-quickstart.r55688
+	gentle.r15878
+	guide-to-latex.r45712
+	happy4th.r25020
+	hyphen-english.r58609
+	impatient.r54080
+	intro-scientific.r15878
+	knuth-hint.r67373
+	l2tabu-english.r15878
+	latex-brochure.r40612
+	latex-course.r25505
+	latex-doc-ptr.r57311
+	latex-for-undergraduates.r64647
+	latex-graphics-companion.r29235
+	latex-refsheet.r45076
+	latex-veryshortguide.r55228
+	latex-web-companion.r29349
+	latex2e-help-texinfo.r65552
+	latex4wp.r68096
+	latexcheat.r15878
+	latexcourse-rug.r39026
+	latexfileinfo-pkgs.r26760
+	lshort-english.r58309
+	macros2e.r64967
+	math-into-latex-4.r44131
+	maths-symbols.r37763
+	memdesign.r48664
+	memoirchapterstyles.r59766
+	metafont-beginners.r29803
+	metapost-examples.r15878
+	patgen2-tutorial.r58841
+	pictexsum.r24965
+	plain-doc.r28424
+	short-math-guide.r46126
+	simplified-latex.r20620
+	svg-inkscape.r32199
+	tamethebeast.r15878
+	tds.r64477
+	tex-font-errors-cheatsheet.r18314
+	tex-nutshell.r67213
+	tex-overview.r41403
+	tex-refs.r57349
+	tex-vpat.r66758
+	texbytopic.r15878
+	texonly.r50985
+	titlepages.r19457
+	tlc2.r26096
+	tlc3-examples.r65496
+	tlmgrbasics.r67460
+	undergradmath.r57286
+	visualfaq.r61719
+	webguide.r25813
+	xetexref.r68072
+	yet-another-guide-latex2e.r68564
+	collection-langenglish.r66846
+"
+TEXLIVE_MODULE_DOC_CONTENTS="
+	amiweb2c-guide.doc.r56878
+	amscls-doc.doc.r46110
+	amslatex-primer.doc.r28980
+	around-the-bend.doc.r15878
+	ascii-chart.doc.r20536
+	biblatex-cheatsheet.doc.r44685
+	components.doc.r63184
+	comprehensive.doc.r59099
+	dickimaw.doc.r32925
+	docsurvey.doc.r61447
+	drawing-with-metapost.doc.r66846
+	dtxtut.doc.r38375
+	first-latex-doc.doc.r15878
+	fontinstallationguide.doc.r59755
+	forest-quickstart.doc.r55688
+	gentle.doc.r15878
+	guide-to-latex.doc.r45712
+	happy4th.doc.r25020
+	impatient.doc.r54080
+	intro-scientific.doc.r15878
+	knuth-hint.doc.r67373
+	l2tabu-english.doc.r15878
+	latex-brochure.doc.r40612
+	latex-course.doc.r25505
+	latex-doc-ptr.doc.r57311
+	latex-for-undergraduates.doc.r64647
+	latex-graphics-companion.doc.r29235
+	latex-refsheet.doc.r45076
+	latex-veryshortguide.doc.r55228
+	latex-web-companion.doc.r29349
+	latex2e-help-texinfo.doc.r65552
+	latex4wp.doc.r68096
+	latexcheat.doc.r15878
+	latexcourse-rug.doc.r39026
+	latexfileinfo-pkgs.doc.r26760
+	lshort-english.doc.r58309
+	macros2e.doc.r64967
+	math-into-latex-4.doc.r44131
+	maths-symbols.doc.r37763
+	memdesign.doc.r48664
+	memoirchapterstyles.doc.r59766
+	metafont-beginners.doc.r29803
+	metapost-examples.doc.r15878
+	patgen2-tutorial.doc.r58841
+	pictexsum.doc.r24965
+	plain-doc.doc.r28424
+	short-math-guide.doc.r46126
+	simplified-latex.doc.r20620
+	svg-inkscape.doc.r32199
+	tamethebeast.doc.r15878
+	tds.doc.r64477
+	tex-font-errors-cheatsheet.doc.r18314
+	tex-nutshell.doc.r67213
+	tex-overview.doc.r41403
+	tex-refs.doc.r57349
+	tex-vpat.doc.r66758
+	texbytopic.doc.r15878
+	texonly.doc.r50985
+	titlepages.doc.r19457
+	tlc2.doc.r26096
+	tlc3-examples.doc.r65496
+	tlmgrbasics.doc.r67460
+	undergradmath.doc.r57286
+	visualfaq.doc.r61719
+	webguide.doc.r25813
+	xetexref.doc.r68072
+	yet-another-guide-latex2e.doc.r68564
+"
+TEXLIVE_MODULE_SRC_CONTENTS="
+	latexfileinfo-pkgs.source.r26760
+"
+inherit texlive-module
+DESCRIPTION="TeXLive US and UK English"
+RESTRICT="mirror"
+
+LICENSE="CC-BY-3.0 CC-BY-SA-4.0 FDL-1.3 GPL-1 GPL-2 LPPL-1.2 LPPL-1.3 LPPL-1.3c OPL TeX TeX-other-free public-domain"
+SLOT="0/2023"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris"
+IUSE=""
+DEPEND="
+	>=dev-texlive/texlive-basic-2019
+"
+RDEPEND="
+	${DEPEND}
+"
