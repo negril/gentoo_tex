@@ -91,7 +91,6 @@ RESTRICT="mirror"
 LICENSE="FDL-1.3 GPL-1 GPL-3+ LGPL-2 LPPL-1.3 LPPL-1.3c MIT TeX TeX-other-free public-domain"
 SLOT="0/2023"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris"
-IUSE=""
 DEPEND="
 	>=dev-texlive/texlive-langcjk-2019
 "

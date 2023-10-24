@@ -719,7 +719,6 @@ RESTRICT="mirror"
 LICENSE="Apache-2.0 BSD CC-BY-4.0 CC-BY-SA-3.0 CC-BY-SA-4.0 CC0-1.0 FDL-1.3 GPL-1 GPL-2 GPL-3 GPL-3+ LPPL-1.2 LPPL-1.3 LPPL-1.3a LPPL-1.3c MIT OFL TeX-other-free public-domain"
 SLOT="0/2023"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris"
-IUSE=""
 DEPEND="
 	>=dev-texlive/texlive-latex-2019
 "

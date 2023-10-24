@@ -92,7 +92,6 @@ RESTRICT="mirror"
 LICENSE="BSD FDL-1.3 GPL-1 GPL-2 LGPL-2.1 LPPL-1.2 LPPL-1.3 LPPL-1.3c MIT"
 SLOT="0/2023"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris"
-IUSE=""
 DEPEND="
 	>=dev-texlive/texlive-latex-2019
 "
