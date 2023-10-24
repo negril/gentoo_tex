@@ -84,36 +84,37 @@ inherit texlive-common
 
 HOMEPAGE="https://www.tug.org/texlive/"
 
-COMMON_DEPEND=">=app-text/texlive-core-${TL_PV:-${PV}}"
-
 IUSE="doc source"
 
 # Starting from TeX Live 2009, upstream provides .tar.xz modules.
-PKGEXT=tar.xz
+tl_PKGEXT=tar.xz
 
 # Now where should we get these files?
 TEXLIVE_DEVS=${TEXLIVE_DEVS:- zlogene dilfridge sam }
 
+RDEPEND=">=app-text/texlive-core-${TL_PV:-${PV}}"
 # We do not need anything from SYSROOT:
 #   Everything is built from the texlive install in /
 #   Generated files are noarch
-BDEPEND="${COMMON_DEPEND}
-	app-arch/xz-utils"
+BDEPEND="
+	${RDEPEND}
+	app-arch/xz-utils
+"
 
 tl_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/tl-"
-tl_uri_suffix="-${PV}.${PKGEXT}"
+tl_uri_suffix="-${PV}.${tl_PKGEXT}"
 
-mirror="mirror://ctan/tlnet/archive"
+tl_mirror="mirror://ctan/tlnet/archive"
 
 tl_uri=( ${TEXLIVE_MODULE_CONTENTS} )
-if ver_test "$PV" -lt 2023; then
+if ver_test -lt 2023; then
 	tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
-	for tldev in ${TEXLIVE_DEVS}; do
-		SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tldev}}}"
+	for tl_dev in ${TEXLIVE_DEVS}; do
+		SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
 	done
 else
-	tl_uri=( "${tl_uri[@]/%/.${PKGEXT}}" )
-	SRC_URI+="${tl_uri[*]/#/${mirror}/}"
+	tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
+	SRC_URI+="${tl_uri[*]/#/${tl_mirror}/}"
 fi
 
 
@@ -121,14 +122,14 @@ fi
 if [[ -n ${TEXLIVE_MODULE_DOC_CONTENTS} ]]; then
 	SRC_URI+=" doc? ("
 	tl_uri=( ${TEXLIVE_MODULE_DOC_CONTENTS} )
-	if ver_test "$PV" -lt 2023; then
+	if ver_test -lt 2023; then
 		tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
-		for tldev in ${TEXLIVE_DEVS}; do
-			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tldev}}}"
+		for tl_dev in ${TEXLIVE_DEVS}; do
+			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
 		done
 	else
-		tl_uri=( "${tl_uri[@]/%/.${PKGEXT}}" )
-		SRC_URI+=" ${tl_uri[*]/#/${mirror}/}"
+		tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
+		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
 	fi
 	SRC_URI+=" )"
 fi
@@ -137,22 +138,20 @@ fi
 if [[ -n ${TEXLIVE_MODULE_SRC_CONTENTS} ]]; then
 	SRC_URI+=" source? ("
 	tl_uri=( ${TEXLIVE_MODULE_SRC_CONTENTS} )
-	if ver_test "$PV" -lt 2023; then
+	if ver_test -lt 2023; then
 		tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
-		for tldev in ${TEXLIVE_DEVS}; do
-			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tldev}}}"
+		for tl_dev in ${TEXLIVE_DEVS}; do
+			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
 		done
 	else
-		tl_uri=( "${tl_uri[@]/%/.${PKGEXT}}" )
-		SRC_URI+=" ${tl_uri[*]/#/${mirror}/}"
+		tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
+		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
 	fi
 	SRC_URI+=" )"
 fi
 
-unset mirror
-unset tldev tl_uri tl_uri_prefix tl_uri_suffix
-
-RDEPEND="${COMMON_DEPEND}"
+unset tl_mirror
+unset tl_dev tl_uri tl_uri_prefix tl_uri_suffix tl_PKGEXT TEXLIVE_DEVS
 
 # @ECLASS_VARIABLE: TEXLIVE_MODULE_OPTIONAL_ENGINE
 # @DEFAULT_UNSET
@@ -173,10 +172,10 @@ S="${WORKDIR}"
 # Only for TeX Live 2009 and later.
 # After unpacking, the files that need to be relocated are moved accordingly.
 
-RELOC_TARGET=texmf-dist
 
 texlive-module_src_unpack() {
 	unpack ${A}
+	local RELOC_TARGET=texmf-dist
 
 	sed -n -e 's:\s*RELOC/::p' tlpkg/tlpobj/* > "${T}/reloclist" || die
 	sed -e 's/\/[^/]*$//' -e "s:^:${RELOC_TARGET}/:" "${T}/reloclist" |
@@ -477,8 +476,5 @@ texlive-module_pkg_postrm() {
 }
 
 fi
-
-# for now
-# unset COMMON_DEPEND PKGEXT RELOC_TARGET TEXLIVE_DEVS
 
 EXPORT_FUNCTIONS src_unpack src_compile src_install pkg_postinst pkg_postrm
