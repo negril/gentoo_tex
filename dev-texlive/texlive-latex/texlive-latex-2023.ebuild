@@ -31,13 +31,13 @@ TEXLIVE_MODULE_CONTENTS="
 	grfext.r53024
 	hopatch.r65491
 	hycolor.r53584
-	hyperref.r67583
+	hyperref.r68630
 	intcalc.r53168
 	kvdefinekeys.r53193
 	kvoptions.r63622
 	kvsetkeys.r64632
-	l3backend.r68507
-	l3kernel.r68507
+	l3backend.r68631
+	l3kernel.r68632
 	l3packages.r68507
 	latex.r67413
 	latex-bin.r66186
@@ -91,13 +91,13 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	grfext.doc.r53024
 	hopatch.doc.r65491
 	hycolor.doc.r53584
-	hyperref.doc.r67583
+	hyperref.doc.r68630
 	intcalc.doc.r53168
 	kvdefinekeys.doc.r53193
 	kvoptions.doc.r63622
 	kvsetkeys.doc.r64632
-	l3backend.doc.r68507
-	l3kernel.doc.r68507
+	l3backend.doc.r68631
+	l3kernel.doc.r68632
 	l3packages.doc.r68507
 	latex.doc.r67413
 	latex-bin.doc.r66186
@@ -145,13 +145,13 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	grfext.source.r53024
 	hopatch.source.r65491
 	hycolor.source.r53584
-	hyperref.source.r67583
+	hyperref.source.r68630
 	intcalc.source.r53168
 	kvdefinekeys.source.r53193
 	kvoptions.source.r63622
 	kvsetkeys.source.r64632
-	l3backend.source.r68507
-	l3kernel.source.r68507
+	l3backend.source.r68631
+	l3kernel.source.r68632
 	l3packages.source.r68507
 	latex.source.r67413
 	latex-lab.source.r67314

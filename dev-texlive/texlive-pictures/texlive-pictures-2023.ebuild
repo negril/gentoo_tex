@@ -191,7 +191,7 @@ TEXLIVE_MODULE_CONTENTS="
 	tikz-nfold.r67718
 	tikz-opm.r32769
 	tikz-optics.r62977
-	tikz-osci.r68491
+	tikz-osci.r68636
 	tikz-page.r42039
 	tikz-palattice.r43442
 	tikz-planets.r55002
@@ -231,7 +231,7 @@ TEXLIVE_MODULE_CONTENTS="
 	tkz-berge.r57485
 	tkz-bernoulli.r68503
 	tkz-doc.r66115
-	tkz-euclide.r65724
+	tkz-euclide.r68604
 	tkz-fct.r61949
 	tkz-graph.r57484
 	tkz-orm.r61719
@@ -440,7 +440,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	tikz-nfold.doc.r67718
 	tikz-opm.doc.r32769
 	tikz-optics.doc.r62977
-	tikz-osci.doc.r68491
+	tikz-osci.doc.r68636
 	tikz-page.doc.r42039
 	tikz-palattice.doc.r43442
 	tikz-planets.doc.r55002
@@ -480,7 +480,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	tkz-berge.doc.r57485
 	tkz-bernoulli.doc.r68503
 	tkz-doc.doc.r66115
-	tkz-euclide.doc.r65724
+	tkz-euclide.doc.r68604
 	tkz-fct.doc.r61949
 	tkz-graph.doc.r57484
 	tkz-orm.doc.r61719

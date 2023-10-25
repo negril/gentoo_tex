@@ -134,7 +134,7 @@ TEXLIVE_MODULE_CONTENTS="
 	letterswitharrows.r59993
 	lie-hasse.r61719
 	logicproof.r33254
-	longdivision.r59979
+	longdivision.r68609
 	lpform.r36918
 	lplfitch.r31077
 	lstbayes.r48160
@@ -164,7 +164,7 @@ TEXLIVE_MODULE_CONTENTS="
 	natded.r32693
 	nath.r15878
 	nchairx.r60196
-	nicematrix.r68398
+	nicematrix.r68639
 	nuc.r22256
 	nucleardata.r47307
 	numerica.r68021
@@ -392,7 +392,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	letterswitharrows.doc.r59993
 	lie-hasse.doc.r61719
 	logicproof.doc.r33254
-	longdivision.doc.r59979
+	longdivision.doc.r68609
 	lpform.doc.r36918
 	lplfitch.doc.r31077
 	lstbayes.doc.r48160
@@ -421,7 +421,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	natded.doc.r32693
 	nath.doc.r15878
 	nchairx.doc.r60196
-	nicematrix.doc.r68398
+	nicematrix.doc.r68639
 	nuc.doc.r22256
 	nucleardata.doc.r47307
 	numerica.doc.r68021
@@ -603,7 +603,7 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	multiobjective.source.r15878
 	naive-ebnf.source.r67892
 	nchairx.source.r60196
-	nicematrix.source.r68398
+	nicematrix.source.r68639
 	nucleardata.source.r47307
 	objectz.source.r61719
 	overarrows.source.r65853

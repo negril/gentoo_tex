@@ -10,7 +10,7 @@ TEXLIVE_MODULE_CONTENTS="
 	cursolatex.r24139
 	feupphdteses.r30962
 	hyphen-portuguese.r58609
-	latex-via-exemplos.r66989
+	latex-via-exemplos.r68627
 	latexcheat-ptbr.r15878
 	lshort-portuguese.r55643
 	numberpt.r51640
@@ -24,7 +24,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	beamer-tut-pt.doc.r15878
 	cursolatex.doc.r24139
 	feupphdteses.doc.r30962
-	latex-via-exemplos.doc.r66989
+	latex-via-exemplos.doc.r68627
 	latexcheat-ptbr.doc.r15878
 	lshort-portuguese.doc.r55643
 	numberpt.doc.r51640

@@ -27,7 +27,7 @@ TEXLIVE_MODULE_CONTENTS="
 	pxfonts.r15878
 	rsfs.r15878
 	symbol.r61719
-	tex-gyre.r67718
+	tex-gyre.r68624
 	tex-gyre-math.r41264
 	times.r61719
 	tipa.r29349
@@ -54,7 +54,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	mflogo-font.doc.r54512
 	pxfonts.doc.r15878
 	rsfs.doc.r15878
-	tex-gyre.doc.r67718
+	tex-gyre.doc.r68624
 	tex-gyre-math.doc.r41264
 	tipa.doc.r29349
 	txfonts.doc.r15878
@@ -68,7 +68,7 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	fpl.source.r54512
 	marvosym.source.r29349
 	mathpazo.source.r52663
-	tex-gyre.source.r67718
+	tex-gyre.source.r68624
 	tex-gyre-math.source.r41264
 	wasysym.source.r54080
 "

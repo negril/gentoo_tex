@@ -8,7 +8,7 @@ TEXLIVE_MODULE_CONTENTS="
 	abnt.r55471
 	abntex2.r49248
 	abntexto.r68554
-	acmart.r68550
+	acmart.r68628
 	acmconf.r15878
 	active-conf.r15878
 	adfathesis.r26048
@@ -28,7 +28,7 @@ TEXLIVE_MODULE_CONTENTS="
 	asaetr.r15878
 	ascelike.r29129
 	asmeconf.r68593
-	asmejour.r65405
+	asmejour.r68629
 	aucklandthesis.r51323
 	bangorcsthesis.r61770
 	bangorexam.r65140
@@ -118,7 +118,7 @@ TEXLIVE_MODULE_CONTENTS="
 	jourcl.r65290
 	jourrr.r68556
 	jpsj.r66115
-	jwjournal.r68422
+	jwjournal.r68608
 	kdgdocs.r24498
 	kdpcover.r65150
 	kfupm-math-exam.r63977
@@ -257,7 +257,7 @@ TEXLIVE_MODULE_CONTENTS="
 	unam-thesis.r51207
 	unamth-template.r33625
 	unamthesis.r43639
-	unbtex.r68596
+	unbtex.r68603
 	unifith.r60698
 	unigrazpub.r64797
 	unitn-bimrep.r45581
@@ -294,7 +294,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	abnt.doc.r55471
 	abntex2.doc.r49248
 	abntexto.doc.r68554
-	acmart.doc.r68550
+	acmart.doc.r68628
 	acmconf.doc.r15878
 	active-conf.doc.r15878
 	adfathesis.doc.r26048
@@ -314,7 +314,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	asaetr.doc.r15878
 	ascelike.doc.r29129
 	asmeconf.doc.r68593
-	asmejour.doc.r65405
+	asmejour.doc.r68629
 	aucklandthesis.doc.r51323
 	bangorcsthesis.doc.r61770
 	bangorexam.doc.r65140
@@ -402,7 +402,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	jourcl.doc.r65290
 	jourrr.doc.r68556
 	jpsj.doc.r66115
-	jwjournal.doc.r68422
+	jwjournal.doc.r68608
 	kdgdocs.doc.r24498
 	kdpcover.doc.r65150
 	kfupm-math-exam.doc.r63977
@@ -539,7 +539,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	unam-thesis.doc.r51207
 	unamth-template.doc.r33625
 	unamthesis.doc.r43639
-	unbtex.doc.r68596
+	unbtex.doc.r68603
 	unifith.doc.r60698
 	unigrazpub.doc.r64797
 	unitn-bimrep.doc.r45581
@@ -571,7 +571,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	york-thesis.doc.r23348
 "
 TEXLIVE_MODULE_SRC_CONTENTS="
-	acmart.source.r68550
+	acmart.source.r68628
 	acmconf.source.r15878
 	active-conf.source.r15878
 	adfathesis.source.r26048

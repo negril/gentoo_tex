@@ -23,7 +23,7 @@ TEXLIVE_MODULE_CONTENTS="
 	archaic.r38005
 	archivo.r57283
 	arev.r15878
-	arimo.r64548
+	arimo.r68624
 	arsenal.r68191
 	arvo.r57213
 	asana-math.r59629
@@ -178,7 +178,7 @@ TEXLIVE_MODULE_CONTENTS="
 	gfssolomos.r18651
 	gillcm.r19878
 	gillius.r64865
-	gnu-freefont.r29349
+	gnu-freefont.r68624
 	gofonts.r64358
 	gothic.r49869
 	greenpoint.r15878
@@ -251,7 +251,7 @@ TEXLIVE_MODULE_CONTENTS="
 	mpfonts.r54512
 	mweights.r53520
 	newcomputermodern.r68563
-	newpx.r68388
+	newpx.r68635
 	newtx.r68071
 	newtxsf.r67051
 	newtxtt.r54512
@@ -277,7 +277,7 @@ TEXLIVE_MODULE_CONTENTS="
 	overlock.r64495
 	pacioli.r24947
 	pagella-otf.r64705
-	paratype.r32859
+	paratype.r68624
 	phaistos.r18651
 	phonetic.r56468
 	pigpen.r15878
@@ -310,7 +310,7 @@ TEXLIVE_MODULE_CONTENTS="
 	schulschriften.r59388
 	semaphor.r18651
 	shobhika.r50555
-	simpleicons.r68529
+	simpleicons.r68619
 	skull.r51907
 	sourcecodepro.r54512
 	sourcesanspro.r54892
@@ -380,7 +380,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	archaic.doc.r38005
 	archivo.doc.r57283
 	arev.doc.r15878
-	arimo.doc.r64548
+	arimo.doc.r68624
 	arsenal.doc.r68191
 	arvo.doc.r57213
 	asana-math.doc.r59629
@@ -531,7 +531,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	gfssolomos.doc.r18651
 	gillcm.doc.r19878
 	gillius.doc.r64865
-	gnu-freefont.doc.r29349
+	gnu-freefont.doc.r68624
 	gofonts.doc.r64358
 	gothic.doc.r49869
 	greenpoint.doc.r15878
@@ -603,7 +603,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	mpfonts.doc.r54512
 	mweights.doc.r53520
 	newcomputermodern.doc.r68563
-	newpx.doc.r68388
+	newpx.doc.r68635
 	newtx.doc.r68071
 	newtxsf.doc.r67051
 	newtxtt.doc.r54512
@@ -629,7 +629,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	overlock.doc.r64495
 	pacioli.doc.r24947
 	pagella-otf.doc.r64705
-	paratype.doc.r32859
+	paratype.doc.r68624
 	phaistos.doc.r18651
 	phonetic.doc.r56468
 	pigpen.doc.r15878
@@ -661,7 +661,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	schulschriften.doc.r59388
 	semaphor.doc.r18651
 	shobhika.doc.r50555
-	simpleicons.doc.r68529
+	simpleicons.doc.r68619
 	sourcecodepro.doc.r54512
 	sourcesanspro.doc.r54892
 	sourceserifpro.doc.r54512
@@ -752,7 +752,7 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	fge.source.r68353
 	frimurer.source.r56704
 	gentium-tug.source.r63470
-	gnu-freefont.source.r29349
+	gnu-freefont.source.r68624
 	gothic.source.r49869
 	hamnosys.source.r61941
 	hep-font.source.r67632
@@ -766,7 +766,7 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	metsymb.source.r68175
 	miama.source.r54512
 	mnsymbol.source.r18651
-	newpx.source.r68388
+	newpx.source.r68635
 	nkarta.source.r16437
 	ocr-b-outline.source.r20969
 	oinuit.source.r28668

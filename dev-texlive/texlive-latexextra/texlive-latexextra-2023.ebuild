@@ -114,7 +114,7 @@ TEXLIVE_MODULE_CONTENTS="
 	bigints.r29803
 	bilingualpages.r59643
 	biochemistry-colors.r54512
-	bithesis.r68421
+	bithesis.r68634
 	bizcard.r15878
 	blindtext.r25039
 	blkarray.r36406
@@ -272,7 +272,7 @@ TEXLIVE_MODULE_CONTENTS="
 	crbox.r29803
 	create-theorem.r67712
 	creationboites.r68087
-	crefthe.r68565
+	crefthe.r68618
 	crossreference.r15878
 	crossreftools.r55879
 	crumbs.r64602
@@ -285,6 +285,7 @@ TEXLIVE_MODULE_CONTENTS="
 	currfile.r64673
 	curriculum-vitae.r68211
 	currvita.r15878
+	customenvs.r68637
 	cutwin.r60901
 	cv.r15878
 	cv4tw.r34577
@@ -547,7 +548,7 @@ TEXLIVE_MODULE_CONTENTS="
 	foilhtml.r61937
 	foliono.r58877
 	fontaxes.r55920
-	fontsetup.r67797
+	fontsetup.r68602
 	fontsize.r60161
 	fonttable.r44799
 	footmisc.r67556
@@ -656,7 +657,7 @@ TEXLIVE_MODULE_CONTENTS="
 	hep-math.r67632
 	hep-text.r67632
 	hep-title.r67632
-	hereapplies.r65251
+	hereapplies.r68638
 	hhtensor.r54080
 	hideanswer.r63852
 	highlightlatex.r58392
@@ -1041,7 +1042,7 @@ TEXLIVE_MODULE_CONTENTS="
 	pdfmarginpar.r23492
 	pdfoverlay.r64210
 	pdfpagediff.r37946
-	pdfpc.r63866
+	pdfpc.r68610
 	pdfpc-movie.r67201
 	pdfprivacy.r45985
 	pdfreview.r50100
@@ -1510,7 +1511,7 @@ TEXLIVE_MODULE_CONTENTS="
 	zref-vario.r67949
 	zwgetfdate.r15878
 	zwpagelayout.r63074
-	collection-latexextra.r68377
+	collection-latexextra.r68620
 "
 TEXLIVE_MODULE_DOC_CONTENTS="
 	2up.doc.r55076
@@ -1622,7 +1623,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	bigints.doc.r29803
 	bilingualpages.doc.r59643
 	biochemistry-colors.doc.r54512
-	bithesis.doc.r68421
+	bithesis.doc.r68634
 	bizcard.doc.r15878
 	blindtext.doc.r25039
 	blkarray.doc.r36406
@@ -1778,7 +1779,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	crbox.doc.r29803
 	create-theorem.doc.r67712
 	creationboites.doc.r68087
-	crefthe.doc.r68565
+	crefthe.doc.r68618
 	crossreference.doc.r15878
 	crossreftools.doc.r55879
 	crumbs.doc.r64602
@@ -1791,6 +1792,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	currfile.doc.r64673
 	curriculum-vitae.doc.r68211
 	currvita.doc.r15878
+	customenvs.doc.r68637
 	cutwin.doc.r60901
 	cv.doc.r15878
 	cv4tw.doc.r34577
@@ -2051,7 +2053,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	foilhtml.doc.r61937
 	foliono.doc.r58877
 	fontaxes.doc.r55920
-	fontsetup.doc.r67797
+	fontsetup.doc.r68602
 	fontsize.doc.r60161
 	fonttable.doc.r44799
 	footmisc.doc.r67556
@@ -2159,7 +2161,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	hep-math.doc.r67632
 	hep-text.doc.r67632
 	hep-title.doc.r67632
-	hereapplies.doc.r65251
+	hereapplies.doc.r68638
 	hhtensor.doc.r54080
 	hideanswer.doc.r63852
 	highlightlatex.doc.r58392
@@ -2541,7 +2543,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	pdfmarginpar.doc.r23492
 	pdfoverlay.doc.r64210
 	pdfpagediff.doc.r37946
-	pdfpc.doc.r63866
+	pdfpc.doc.r68610
 	pdfpc-movie.doc.r67201
 	pdfprivacy.doc.r45985
 	pdfreview.doc.r50100
@@ -3057,7 +3059,7 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	bewerbung.source.r61632
 	bez123.source.r15878
 	bigfoot.source.r38248
-	bithesis.source.r68421
+	bithesis.source.r68634
 	bizcard.source.r15878
 	blindtext.source.r25039
 	blowup.source.r67640

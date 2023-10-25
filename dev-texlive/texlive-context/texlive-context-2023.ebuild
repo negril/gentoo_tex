@@ -7,7 +7,7 @@ TEXLIVE_MODULE_CONTENTS="
 	collection-basic.r59159
 	context.r68525
 	context-calendar-examples.r66947
-	context-collating-marks.r66956
+	context-collating-marks.r68624
 	context-cyrillicnumbers.r47085
 	context-filter.r62070
 	context-gnuplot.r47085
@@ -30,7 +30,7 @@ TEXLIVE_MODULE_CONTENTS="
 TEXLIVE_MODULE_DOC_CONTENTS="
 	context.doc.r68525
 	context-calendar-examples.doc.r66947
-	context-collating-marks.doc.r66956
+	context-collating-marks.doc.r68624
 	context-cyrillicnumbers.doc.r47085
 	context-filter.doc.r62070
 	context-gnuplot.doc.r47085

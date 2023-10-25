@@ -99,7 +99,7 @@ TEXLIVE_MODULE_CONTENTS="
 	tabto-generic.r15878
 	termmenu.r37700
 	tex-ps.r15878
-	tex4ht.r68600
+	tex4ht.r68640
 	texapi.r54080
 	texdate.r49362
 	texdimens.r61070
@@ -202,7 +202,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	systeme.doc.r66655
 	termmenu.doc.r37700
 	tex-ps.doc.r15878
-	tex4ht.doc.r68600
+	tex4ht.doc.r68640
 	texapi.doc.r54080
 	texdate.doc.r49362
 	texdimens.doc.r61070
@@ -245,7 +245,7 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	schemata.source.r58020
 	soul.source.r67365
 	termmenu.source.r37700
-	tex4ht.source.r68600
+	tex4ht.source.r68640
 	texdate.source.r49362
 	tracklang.source.r65263
 "

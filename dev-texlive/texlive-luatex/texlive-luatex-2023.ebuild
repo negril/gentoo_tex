@@ -74,10 +74,10 @@ TEXLIVE_MODULE_CONTENTS="
 	luavlna.r67442
 	luaxml.r60709
 	lutabulartools.r67714
-	minim.r66395
-	minim-math.r66395
-	minim-mp.r66395
-	minim-pdf.r66395
+	minim.r68612
+	minim-math.r68612
+	minim-mp.r68612
+	minim-pdf.r68612
 	minim-xmp.r66395
 	newpax.r68242
 	nodetree.r68244
@@ -177,10 +177,10 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	luavlna.doc.r67442
 	luaxml.doc.r60709
 	lutabulartools.doc.r67714
-	minim.doc.r66395
-	minim-math.doc.r66395
-	minim-mp.doc.r66395
-	minim-pdf.doc.r66395
+	minim.doc.r68612
+	minim-math.doc.r68612
+	minim-mp.doc.r68612
+	minim-pdf.doc.r68612
 	minim-xmp.doc.r66395
 	newpax.doc.r68242
 	nodetree.doc.r68244
