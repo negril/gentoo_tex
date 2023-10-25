@@ -247,19 +247,34 @@ TL_CORE_EXTRA_MODULES="
 	gsftopk.r52851
 	texlive.infra.r66822
 	texlive-scripts.r68599
-	${TL_CORE_BINEXTRA_MODULES}
 "
+
 TL_CORE_EXTRA_DOC_MODULES="
 	gsftopk.doc.r52851
 	texlive.infra.doc.r66822
 	texlive-scripts.doc.r68599
-	${TL_CORE_BINEXTRA_DOC_MODULES}
 "
-TL_CORE_EXTRA_SRC_MODULES="
-	${TL_CORE_BINEXTRA_SRC_MODULES}
+TEXLIVE_MODULE_BINSCRIPTS="
+	texmf-dist/scripts/texlive/fmtutil.pl
+	texmf-dist/scripts/texlive/fmtutil-sys.sh
+	texmf-dist/scripts/texlive/fmtutil-user.sh
+	texmf-dist/scripts/texlive/mktexmf
+	texmf-dist/scripts/texlive/mktexpk
+	texmf-dist/scripts/texlive/mktextfm
+	texmf-dist/scripts/texlive/rungs.lua
+	texmf-dist/scripts/texlive/updmap-sys.sh
+	texmf-dist/scripts/texlive/updmap-user.sh
+	texmf-dist/scripts/texlive/updmap.pl
+	texmf-dist/scripts/texlive/tlmgr.pl
+	texmf-dist/scripts/texlive/mktexlsr
+"
+TEXLIVE_MODULE_BINLINKS="
+	mktexlsr:texhash
+	fmtutil:mktexfmt
 "
 
-if [[ $WITH_BINEXTRA -gt 0 ]]; then
+# TL_CORE_EXTRA_SRC_MODULES=""
+
 for i in ${TL_CORE_EXTRA_MODULES}; do
 	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
 done
@@ -269,8 +284,24 @@ for i in ${TL_CORE_EXTRA_DOC_MODULES}; do
 	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
 done
 SRC_URI="${SRC_URI} )"
+# SRC_URI="${SRC_URI} source? ( "
+# for i in ${TL_CORE_EXTRA_SRC_MODULES}; do
+# 	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
+# done
+# SRC_URI="${SRC_URI} )"
+
+if [[ $WITH_BINEXTRA -gt 0 ]]; then
+for i in ${TL_CORE_BINEXTRA_MODULES}; do
+	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
+done
+
+SRC_URI="${SRC_URI} doc? ( "
+for i in ${TL_CORE_BINEXTRA_DOC_MODULES}; do
+	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
+done
+SRC_URI="${SRC_URI} )"
 SRC_URI="${SRC_URI} source? ( "
-for i in ${TL_CORE_EXTRA_SRC_MODULES}; do
+for i in ${TL_CORE_BINEXTRA_SRC_MODULES}; do
 	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
 done
 SRC_URI="${SRC_URI} )"
@@ -354,7 +385,6 @@ RELOC_TARGET=texmf-dist
 src_prepare() {
 	cd "${WORKDIR}" || die
 
-	if [[ $WITH_BINEXTRA -gt 0 ]]; then
 	# mv texlive.tlpdb tlpkg/ || die "failed to move texlive.tlpdb"
 
 	# From texlive-module.eclass.
@@ -367,7 +397,7 @@ src_prepare() {
 		mv "${i}" "${RELOC_TARGET}/${i%/*}" || die
 	done < "${T}/reloclist"
 	mv "${WORKDIR}"/texmf* "${S}" || die "failed to move texmf files"
-	fi
+
 	cd "${S}" || die
 
 	sed -i \
@@ -406,6 +436,11 @@ src_configure() {
 
 	tc-export CC CXX AR RANLIB
 	myconf=(
+		--disable-native-texlive-build
+		--enable-shared
+		--disable-static
+		--with-banner-add="/Gentoo Linux"
+
 		--with-system-freetype2
 		--with-system-zlib
 		--with-system-libpng
@@ -435,7 +470,6 @@ src_configure() {
 		--enable-dvi2tty
 		--enable-mftalkwin
 		--enable-regiswin
-		--enable-shared
 		--enable-tektronixwin
 		--enable-unitermwin
 		--enable-vlna
@@ -456,8 +490,6 @@ src_configure() {
 		--enable-luatex
 		--disable-dvisvgm
 		--disable-ps2eps
-		--disable-static
-		--disable-native-texlive-build
 		--disable-largefile
 		--disable-build-in-source-tree
 		--disable-xindy-docs
@@ -467,9 +499,9 @@ src_configure() {
 		"$(use_enable luajittex mfluajit)"
 		"$(use_enable xetex)"
 		"$(use_enable cjk dviout-util)"
-		"$(use_enable cjk ptex)"
+		# "$(use_enable cjk ptex)"
 		"$(use_enable cjk eptex)"
-		"$(use_enable cjk uptex)"
+		# "$(use_enable cjk uptex)"
 		"$(use_enable cjk euptex)"
 		"$(use_enable cjk mendexk)"
 		"$(use_enable cjk makejvf)"
@@ -478,6 +510,9 @@ src_configure() {
 		"$(use_enable tk texdoctk)"
 		"$(use_with X x)"
 		"$(use_enable xindy)"
+
+		--enable-ptex=no
+		--enable-uptex=no
 
 		--enable-autosp=yes
 		--enable-axodraw2=yes
@@ -504,14 +539,15 @@ src_configure() {
 		--enable-ttfdump=yes
 		--enable-upmendex=yes
 		--enable-texlive=yes
- # web2c afm2pl chktex detex dtl dvi2tty dvidvi dviljk dviout-util dvipdfm-x dvipos gregorio gsftopk makeindexk makejvf mendexk musixtnt seetexk ttfdump upmendex texlive
+
+		--enable-linked-scripts=no
+		# web2c afm2pl chktex detex dtl dvi2tty dvidvi dviljk dviout-util dvipdfm-x dvipos gregorio gsftopk makeindexk makejvf mendexk musixtnt seetexk ttfdump upmendex texlive
 	)
 	cd "${BUILDDIR}" || die
 	ECONF_SOURCE="${S}" \
 		econf -C \
 		--bindir="${EPREFIX}"/usr/bin \
 		--datadir="${BUILDDIR}" \
-		--with-banner-add=" Gentoo Linux" \
 		"${myconf[@]}"
 }
 
@@ -521,7 +557,6 @@ src_compile() {
 
 	emake AR="$(tc-getAR)" SHELL="${EPREFIX}"/bin/sh texmf="${EPREFIX}"${TEXMF_PATH:-/usr/share/texmf-dist}
 
-	if [[ "${WITH_BINEXTRA}" -gt 0 ]]; then
 	cd "${S}" || die
 	# Mimic updmap --syncwithtrees to enable only fonts installed
 	# Code copied from updmap script
@@ -535,7 +570,6 @@ src_compile() {
 	} > "${T}/updmap_update2"
 	sed -f "${T}/updmap_update2" "texmf-dist/web2c/updmap.cfg" >	"${T}/updmap_update3"\
 		&& cat "${T}/updmap_update3" > "texmf-dist/web2c/updmap.cfg"
-	fi
 }
 
 src_install() {
@@ -586,6 +620,17 @@ src_install() {
 	rm -f "${ED}${TEXMF_PATH}/web2c/fmtutil.cnf" || die
 	# Remove bundled and invalid updmap.cfg
 	rm -f "${ED}/usr/share/texmf-dist/web2c/updmap.cfg" || die
+
+	rm -f "${ED}/usr/bin/"{,u}ptex
+
+	[[ -n ${TEXLIVE_MODULE_BINSCRIPTS} ]] && dobin_texmf_scripts ${TEXLIVE_MODULE_BINSCRIPTS}
+	if [[ -n ${TEXLIVE_MODULE_BINLINKS} ]] ; then
+		dodir "/usr/bin"
+		for i in ${TEXLIVE_MODULE_BINLINKS} ; do
+			[[ -f ${ED}/usr/bin/${i%:*} ]] || die "Trying to install an invalid BINLINK ${i%:*}. This should not happen. Please file a bug."
+			dosym "${i%:*}" "/usr/bin/${i#*:}"
+		done
+	fi
 
 	texlive-common_handle_config_files
 

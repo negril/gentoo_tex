@@ -18,9 +18,7 @@ TEXLIVE_MODULE_CONTENTS="
 	luafindfont.r67468
 	metatype1.r37105
 	mf2pt1.r61217
-	ps2eps.r62856
 	ps2pk.r66186
-	psutils.r61719
 	t1utils.r57972
 	collection-fontutils.r61207
 "
@@ -36,9 +34,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	lcdftypetools.doc.r52851
 	luafindfont.doc.r67468
 	mf2pt1.doc.r61217
-	ps2eps.doc.r62856
 	ps2pk.doc.r66186
-	psutils.doc.r61719
 	t1utils.doc.r57972
 "
 TEXLIVE_MODULE_SRC_CONTENTS="
@@ -72,10 +68,6 @@ TEXLIVE_MODULE_BINSCRIPTS="
 	texmf-dist/scripts/fontools/autoinst
 	texmf-dist/scripts/fontools/ot2kpx
 	texmf-dist/scripts/mf2pt1/mf2pt1.pl
-	texmf-dist/scripts/ps2eps/ps2eps.pl
-	texmf-dist/scripts/psutils/extractres.pl
-	texmf-dist/scripts/psutils/includeres.pl
-	texmf-dist/scripts/psutils/psjoin.pl
 	texmf-dist/scripts/texlive-extra/fontinst.sh
 "
 TEXLIVE_MODULE_BINLINKS="

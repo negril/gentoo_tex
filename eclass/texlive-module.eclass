@@ -447,8 +447,9 @@ texlive-module_src_install() {
 
 	[[ -n ${TEXLIVE_MODULE_BINSCRIPTS} ]] && dobin_texmf_scripts ${TEXLIVE_MODULE_BINSCRIPTS}
 	if [[ -n ${TEXLIVE_MODULE_BINLINKS} ]] ; then
+		dodir "/usr/bin"
 		for i in ${TEXLIVE_MODULE_BINLINKS} ; do
-			[[ -f ${ED}/usr/bin/${i%:*} ]] || die "Trying to install an invalid	BINLINK. This should not happen. Please file a bug."
+			[[ -f ${ED}/usr/bin/${i%:*} ]] || die "Trying to install an invalid BINLINK. This should not happen. Please file a bug."
 			dosym "${i%:*}" "/usr/bin/${i#*:}"
 		done
 	fi
