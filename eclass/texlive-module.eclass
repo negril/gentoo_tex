@@ -112,11 +112,11 @@ _texlive-module_append_to_src_uri() {
 
 	local tl_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/tl-"
 	local tl_2023_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/"
-	local tl_uri_suffix="-${PV}.${tl_PKGEXT}"
 	local tl_mirror="mirror://ctan/tlnet/archive"
 
 	local tl_dev
 	if ver_test -lt 2023; then
+		local tl_uri_suffix="-${PV}.${tl_pkgext}"
 		tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
 		for tl_dev in ${TEXLIVE_DEVS}; do
 			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
