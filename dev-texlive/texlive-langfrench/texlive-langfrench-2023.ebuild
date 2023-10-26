@@ -40,7 +40,7 @@ TEXLIVE_MODULE_CONTENTS="
 	panneauxroute.r67951
 	profcollege.r68558
 	proflabo.r63147
-	proflycee.r68633
+	proflycee.r68649
 	profsio.r68397
 	tabvar.r63921
 	tdsfrmath.r15878
@@ -88,7 +88,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	panneauxroute.doc.r67951
 	profcollege.doc.r68558
 	proflabo.doc.r63147
-	proflycee.doc.r68633
+	proflycee.doc.r68649
 	profsio.doc.r68397
 	tabvar.doc.r63921
 	tdsfrmath.doc.r15878

@@ -722,6 +722,7 @@ TEXLIVE_MODULE_CONTENTS="
 	isonums.r17362
 	isopt.r45509
 	isorot.r15878
+	isosafety.r68643
 	isotope.r23711
 	issuulinks.r25742
 	iwhdp.r37552
@@ -1511,7 +1512,7 @@ TEXLIVE_MODULE_CONTENTS="
 	zref-vario.r67949
 	zwgetfdate.r15878
 	zwpagelayout.r63074
-	collection-latexextra.r68620
+	collection-latexextra.r68643
 "
 TEXLIVE_MODULE_DOC_CONTENTS="
 	2up.doc.r55076
@@ -2226,6 +2227,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	isonums.doc.r17362
 	isopt.doc.r45509
 	isorot.doc.r15878
+	isosafety.doc.r68643
 	isotope.doc.r23711
 	issuulinks.doc.r25742
 	iwhdp.doc.r37552
@@ -3445,6 +3447,7 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	isodate.source.r16613
 	isodoc.source.r59709
 	isorot.source.r15878
+	isosafety.source.r68643
 	isotope.source.r23711
 	issuulinks.source.r25742
 	iwonamath.source.r68144

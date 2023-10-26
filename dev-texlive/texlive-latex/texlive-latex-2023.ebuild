@@ -10,7 +10,7 @@ TEXLIVE_MODULE_CONTENTS="
 	atbegshi.r53051
 	atveryend.r53108
 	auxhook.r53173
-	babel.r68400
+	babel.r68651
 	babel-english.r44495
 	babelbib.r57349
 	bigintcalc.r53172
@@ -71,7 +71,7 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	atbegshi.doc.r53051
 	atveryend.doc.r53108
 	auxhook.doc.r53173
-	babel.doc.r68400
+	babel.doc.r68651
 	babel-english.doc.r44495
 	babelbib.doc.r57349
 	bigintcalc.doc.r53172
@@ -127,7 +127,7 @@ TEXLIVE_MODULE_SRC_CONTENTS="
 	atbegshi.source.r53051
 	atveryend.source.r53108
 	auxhook.source.r53173
-	babel.source.r68400
+	babel.source.r68651
 	babel-english.source.r44495
 	bigintcalc.source.r53172
 	bitset.source.r53837

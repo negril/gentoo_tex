@@ -18,11 +18,11 @@ TEXLIVE_MODULE_CONTENTS="
 	collection-basic.r59159
 	ctan-o-mat.r51578
 	ctan_chk.r36304
-	ctanbib.r68315
+	ctanbib.r68650
 	ctanify.r44129
 	ctanupload.r26313
 	ctie.r66186
-	cweb.r68617
+	cweb.r68647
 	de-macro.r66746
 	digestif.r65223
 	dtl.r62387
@@ -123,11 +123,11 @@ TEXLIVE_MODULE_DOC_CONTENTS="
 	cluttex.doc.r60964
 	ctan-o-mat.doc.r51578
 	ctan_chk.doc.r36304
-	ctanbib.doc.r68315
+	ctanbib.doc.r68650
 	ctanify.doc.r44129
 	ctanupload.doc.r26313
 	ctie.doc.r66186
-	cweb.doc.r68617
+	cweb.doc.r68647
 	de-macro.doc.r66746
 	digestif.doc.r65223
 	dtl.doc.r62387
