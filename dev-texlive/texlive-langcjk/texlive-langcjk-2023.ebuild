@@ -61,6 +61,7 @@ DEPEND="
 	>=dev-texlive/texlive-basic-2019
 	>=app-text/texlive-core-2010[cjk]
 	>=dev-texlive/texlive-latex-2011
+	>=dev-texlive/texlive-xetex-2023
 "
 RDEPEND="
 	${DEPEND}
