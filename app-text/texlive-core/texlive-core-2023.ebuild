@@ -272,6 +272,21 @@ TEXLIVE_MODULE_BINLINKS="
 	mktexlsr:texhash
 	fmtutil:mktexfmt
 "
+TEXLIVE_MODULE_BINSCRIPTS+="
+	texmf-dist/scripts/texlive-extra/allcm.sh
+	texmf-dist/scripts/texlive-extra/allneeded.sh
+	texmf-dist/scripts/texlive-extra/dvi2fax.sh
+	texmf-dist/scripts/texlive-extra/dvired.sh
+	texmf-dist/scripts/texlive-extra/e2pall.pl
+	texmf-dist/scripts/texlive-extra/kpsetool.sh
+	texmf-dist/scripts/texlive-extra/kpsewhere.sh
+	texmf-dist/scripts/texlive-extra/ps2frag.sh
+	texmf-dist/scripts/texlive-extra/pslatex.sh
+	texmf-dist/scripts/texlive-extra/texconfig-dialog.sh
+	texmf-dist/scripts/texlive-extra/texconfig-sys.sh
+	texmf-dist/scripts/texlive-extra/texconfig.sh
+	texmf-dist/scripts/texlive-extra/texlinks.sh
+"
 
 # TL_CORE_EXTRA_SRC_MODULES=""
 
