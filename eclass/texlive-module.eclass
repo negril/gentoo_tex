@@ -86,9 +86,6 @@ HOMEPAGE="https://www.tug.org/texlive/"
 
 IUSE="doc source"
 
-# Starting from TeX Live 2009, upstream provides .tar.xz modules.
-tl_PKGEXT=tar.xz
-
 # Now where should we get these files?
 TEXLIVE_DEVS=${TEXLIVE_DEVS:- flow zlogene dilfridge sam }
 
@@ -101,67 +98,55 @@ BDEPEND="
 	app-arch/xz-utils
 "
 
-tl_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/tl-"
-tl_2023_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/"
-tl_uri_suffix="-${PV}.${tl_PKGEXT}"
+# @FUNCTION: _texlive-module_append_to_src_uri
+# @INTERNAL
+# @DESCRIPTION:
+# Takes the name of a variable as input.  The variable must contain a
+# list of texlive packages.  Every texlive package in the variable is
+# transformed to an URL and appended to SRC_URI.
+_texlive-module_append_to_src_uri() {
+	local tl_uri=( ${!1} )
 
-tl_mirror="mirror://ctan/tlnet/archive"
+	# Starting from TeX Live 2009, upstream provides .tar.xz modules.
+	local tl_pkgext=tar.xz
 
-tl_uri=( ${TEXLIVE_MODULE_CONTENTS} )
-if ver_test -lt 2023; then
-	tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
-	for tl_dev in ${TEXLIVE_DEVS}; do
-		SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
-	done
-else
-	tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
-	SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
-	for tl_dev in ${TEXLIVE_DEVS}; do
-		SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
-	done
-fi
+	local tl_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/tl-"
+	local tl_2023_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/"
+	local tl_uri_suffix="-${PV}.${tl_PKGEXT}"
+	local tl_mirror="mirror://ctan/tlnet/archive"
 
-
-# Forge doc SRC_URI
-if [[ -n ${TEXLIVE_MODULE_DOC_CONTENTS} ]]; then
-	SRC_URI+=" doc? ("
-	tl_uri=( ${TEXLIVE_MODULE_DOC_CONTENTS} )
+	local tl_dev
 	if ver_test -lt 2023; then
 		tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
 		for tl_dev in ${TEXLIVE_DEVS}; do
 			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
 		done
 	else
-		tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
+		tl_uri=( "${tl_uri[@]/%/.${tl_pkgext}}" )
 		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
 		for tl_dev in ${TEXLIVE_DEVS}; do
 			SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
 		done
 	fi
+}
+
+_texlive-module_append_to_src_uri TEXLIVE_MODULE_CONTENTS
+
+# Forge doc SRC_URI
+if [[ -n ${TEXLIVE_MODULE_DOC_CONTENTS} ]]; then
+	SRC_URI+=" doc? ("
+	_texlive-module_append_to_src_uri TEXLIVE_MODULE_DOC_CONTENTS
 	SRC_URI+=" )"
 fi
 
 # Forge source SRC_URI
 if [[ -n ${TEXLIVE_MODULE_SRC_CONTENTS} ]]; then
 	SRC_URI+=" source? ("
-	tl_uri=( ${TEXLIVE_MODULE_SRC_CONTENTS} )
-	if ver_test -lt 2023; then
-		tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
-		for tl_dev in ${TEXLIVE_DEVS}; do
-			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
-		done
-	else
-		tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
-		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
-		for tl_dev in ${TEXLIVE_DEVS}; do
-			SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
-		done
-	fi
+	_texlive-module_append_to_src_uri TEXLIVE_MODULE_SRC_CONTENTS
 	SRC_URI+=" )"
 fi
 
-unset tl_mirror
-unset tl_dev tl_uri tl_uri_prefix tl_uri_suffix tl_PKGEXT TEXLIVE_DEVS
+unset TEXLIVE_DEVS
 
 # @ECLASS_VARIABLE: TEXLIVE_MODULE_OPTIONAL_ENGINE
 # @DEFAULT_UNSET
@@ -181,7 +166,6 @@ S="${WORKDIR}"
 # @DESCRIPTION:
 # Only for TeX Live 2009 and later.
 # After unpacking, the files that need to be relocated are moved accordingly.
-
 
 texlive-module_src_unpack() {
 	unpack ${A}
