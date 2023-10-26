@@ -32,11 +32,11 @@ TL_CORE_BINEXTRA_MODULES="
 	cluttex.r60964
 	ctan-o-mat.r51578
 	ctan_chk.r36304
-	ctanbib.r68315
+	ctanbib.r68650
 	ctanify.r44129
 	ctanupload.r26313
 	ctie.r66186
-	cweb.r68429
+	cweb.r68647
 	de-macro.r66746
 	digestif.r65223
 	dtl.r62387
@@ -135,11 +135,11 @@ TL_CORE_BINEXTRA_DOC_MODULES="
 	cluttex.doc.r60964
 	ctan-o-mat.doc.r51578
 	ctan_chk.doc.r36304
-	ctanbib.doc.r68315
+	ctanbib.doc.r68650
 	ctanify.doc.r44129
 	ctanupload.doc.r26313
 	ctie.doc.r66186
-	cweb.doc.r68429
+	cweb.doc.r68647
 	de-macro.doc.r66746
 	digestif.doc.r65223
 	dtl.doc.r62387
@@ -245,14 +245,14 @@ TL_CORE_BINEXTRA_SRC_MODULES="
 TL_CORE_EXTRA_MODULES="
 	hyphen-base.r68321
 	gsftopk.r52851
-	texlive.infra.r66822
-	texlive-scripts.r68599
+	texlive.infra.r68562
+	texlive-scripts.r68642
 "
 
 TL_CORE_EXTRA_DOC_MODULES="
 	gsftopk.doc.r52851
-	texlive.infra.doc.r66822
-	texlive-scripts.doc.r68599
+	texlive.infra.doc.r68562
+	texlive-scripts.doc.r68642
 "
 TEXLIVE_MODULE_BINSCRIPTS="
 	texmf-dist/scripts/texlive/fmtutil.pl
@@ -324,8 +324,6 @@ fi
 
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
 IUSE="cjk X doc source tk +luajittex xetex xindy"
-
-TEXMF_PATH=/usr/share/texmf-dist
 
 MODULAR_X_DEPEND="
 	X? (
