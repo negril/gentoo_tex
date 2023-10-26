@@ -90,7 +90,7 @@ IUSE="doc source"
 tl_PKGEXT=tar.xz
 
 # Now where should we get these files?
-TEXLIVE_DEVS=${TEXLIVE_DEVS:- zlogene dilfridge sam }
+TEXLIVE_DEVS=${TEXLIVE_DEVS:- flow zlogene dilfridge sam }
 
 RDEPEND=">=app-text/texlive-core-${TL_PV:-${PV}}"
 # We do not need anything from SYSROOT:
@@ -102,6 +102,7 @@ BDEPEND="
 "
 
 tl_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/tl-"
+tl_2023_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/"
 tl_uri_suffix="-${PV}.${tl_PKGEXT}"
 
 tl_mirror="mirror://ctan/tlnet/archive"
@@ -114,7 +115,10 @@ if ver_test -lt 2023; then
 	done
 else
 	tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
-	SRC_URI+="${tl_uri[*]/#/${tl_mirror}/}"
+	SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
+	for tl_dev in ${TEXLIVE_DEVS}; do
+		SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
+	done
 fi
 
 
@@ -130,6 +134,9 @@ if [[ -n ${TEXLIVE_MODULE_DOC_CONTENTS} ]]; then
 	else
 		tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
 		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
+		for tl_dev in ${TEXLIVE_DEVS}; do
+			SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
+		done
 	fi
 	SRC_URI+=" )"
 fi
@@ -146,6 +153,9 @@ if [[ -n ${TEXLIVE_MODULE_SRC_CONTENTS} ]]; then
 	else
 		tl_uri=( "${tl_uri[@]/%/.${tl_PKGEXT}}" )
 		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
+		for tl_dev in ${TEXLIVE_DEVS}; do
+			SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
+		done
 	fi
 	SRC_URI+=" )"
 fi
