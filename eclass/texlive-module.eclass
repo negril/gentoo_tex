@@ -87,7 +87,7 @@ HOMEPAGE="https://www.tug.org/texlive/"
 IUSE="doc source"
 
 # Now where should we get these files?
-TEXLIVE_DEVS=${TEXLIVE_DEVS:- flow zlogene dilfridge sam }
+TEXLIVE_DEVS=${TEXLIVE_DEVS:- zlogene dilfridge sam }
 
 RDEPEND=">=app-text/texlive-core-${TL_PV:-${PV}}"
 # We do not need anything from SYSROOT:
@@ -117,14 +117,17 @@ _texlive-module_append_to_src_uri() {
 	local tl_dev
 	if ver_test -lt 2023; then
 		local tl_uri_suffix="-${PV}.${tl_pkgext}"
+
 		tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
 		for tl_dev in ${TEXLIVE_DEVS}; do
 			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
 		done
 	else
+		local texlive_ge_2023_devs=( flow )
+
 		tl_uri=( "${tl_uri[@]/%/.${tl_pkgext}}" )
 		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
-		for tl_dev in ${TEXLIVE_DEVS}; do
+		for tl_dev in "${texlive_ge_2023_devs[@]}"; do
 			SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
 		done
 	fi
