@@ -198,7 +198,6 @@ texlive-common_append_to_src_uri() {
 
 	local tl_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/tl-"
 	local tl_2023_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/"
-	local tl_mirror="mirror://ctan/tlnet/archive"
 
 	local tl_dev
 	if ver_test -lt 2023; then
@@ -211,9 +210,10 @@ texlive-common_append_to_src_uri() {
 		done
 	else
 		local texlive_ge_2023_devs=( flow )
+		local tl_mirror="mirror://ctan/systems/texlive/tlnet/archive/"
 
 		tl_uri=( "${tl_uri[@]/%/.${tl_pkgext}}" )
-		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
+		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}}"
 		for tl_dev in "${texlive_ge_2023_devs[@]}"; do
 			SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
 		done
