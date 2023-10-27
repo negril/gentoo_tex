@@ -290,14 +290,10 @@ TEXLIVE_MODULE_BINSCRIPTS+="
 
 # TL_CORE_EXTRA_SRC_MODULES=""
 
-for i in ${TL_CORE_EXTRA_MODULES}; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri TL_CORE_EXTRA_MODULES
 
 SRC_URI="${SRC_URI} doc? ( "
-for i in ${TL_CORE_EXTRA_DOC_MODULES}; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri TL_CORE_EXTRA_DOC_MODULES
 SRC_URI="${SRC_URI} )"
 # SRC_URI="${SRC_URI} source? ( "
 # for i in ${TL_CORE_EXTRA_SRC_MODULES}; do
@@ -306,19 +302,14 @@ SRC_URI="${SRC_URI} )"
 # SRC_URI="${SRC_URI} )"
 
 if [[ $WITH_BINEXTRA -gt 0 ]]; then
-for i in ${TL_CORE_BINEXTRA_MODULES}; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri TL_CORE_BINEXTRA_MODULES
 
 SRC_URI="${SRC_URI} doc? ( "
-for i in ${TL_CORE_BINEXTRA_DOC_MODULES}; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri TL_CORE_BINEXTRA_DOC_MODULES
 SRC_URI="${SRC_URI} )"
+
 SRC_URI="${SRC_URI} source? ( "
-for i in ${TL_CORE_BINEXTRA_SRC_MODULES}; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri TL_CORE_BINEXTRA_SRC_MODULES
 SRC_URI="${SRC_URI} )"
 fi
 

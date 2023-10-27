@@ -86,9 +86,6 @@ HOMEPAGE="https://www.tug.org/texlive/"
 
 IUSE="doc source"
 
-# Now where should we get these files?
-TEXLIVE_DEVS=${TEXLIVE_DEVS:- zlogene dilfridge sam }
-
 RDEPEND=">=app-text/texlive-core-${TL_PV:-${PV}}"
 # We do not need anything from SYSROOT:
 #   Everything is built from the texlive install in /
@@ -98,58 +95,21 @@ BDEPEND="
 	app-arch/xz-utils
 "
 
-# @FUNCTION: _texlive-module_append_to_src_uri
-# @INTERNAL
-# @DESCRIPTION:
-# Takes the name of a variable as input.  The variable must contain a
-# list of texlive packages.  Every texlive package in the variable is
-# transformed to an URL and appended to SRC_URI.
-_texlive-module_append_to_src_uri() {
-	local tl_uri=( ${!1} )
-
-	# Starting from TeX Live 2009, upstream provides .tar.xz modules.
-	local tl_pkgext=tar.xz
-
-	local tl_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/tl-"
-	local tl_2023_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/"
-	local tl_mirror="mirror://ctan/tlnet/archive"
-
-	local tl_dev
-	if ver_test -lt 2023; then
-		local tl_uri_suffix="-${PV}.${tl_pkgext}"
-
-		tl_uri=( "${tl_uri[@]/%/${tl_uri_suffix}}" )
-		for tl_dev in ${TEXLIVE_DEVS}; do
-			SRC_URI+=" ${tl_uri[*]/#/${tl_uri_prefix/@dev@/${tl_dev}}}"
-		done
-	else
-		local texlive_ge_2023_devs=( flow )
-
-		tl_uri=( "${tl_uri[@]/%/.${tl_pkgext}}" )
-		SRC_URI+=" ${tl_uri[*]/#/${tl_mirror}/}"
-		for tl_dev in "${texlive_ge_2023_devs[@]}"; do
-			SRC_URI+=" ${tl_uri[*]/#/${tl_2023_uri_prefix/@dev@/${tl_dev}}}"
-		done
-	fi
-}
-
-_texlive-module_append_to_src_uri TEXLIVE_MODULE_CONTENTS
+texlive-common_append_to_src_uri TEXLIVE_MODULE_CONTENTS
 
 # Forge doc SRC_URI
 if [[ -n ${TEXLIVE_MODULE_DOC_CONTENTS} ]]; then
 	SRC_URI+=" doc? ("
-	_texlive-module_append_to_src_uri TEXLIVE_MODULE_DOC_CONTENTS
+	texlive-common_append_to_src_uri TEXLIVE_MODULE_DOC_CONTENTS
 	SRC_URI+=" )"
 fi
 
 # Forge source SRC_URI
 if [[ -n ${TEXLIVE_MODULE_SRC_CONTENTS} ]]; then
 	SRC_URI+=" source? ("
-	_texlive-module_append_to_src_uri TEXLIVE_MODULE_SRC_CONTENTS
+	texlive-common_append_to_src_uri TEXLIVE_MODULE_SRC_CONTENTS
 	SRC_URI+=" )"
 fi
-
-unset TEXLIVE_DEVS
 
 # @ECLASS_VARIABLE: TEXLIVE_MODULE_OPTIONAL_ENGINE
 # @DEFAULT_UNSET
