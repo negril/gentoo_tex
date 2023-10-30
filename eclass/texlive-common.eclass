@@ -200,7 +200,11 @@ texlive-common_append_to_src_uri() {
 	local tl_2023_uri_prefix="https://dev.gentoo.org/~@dev@/distfiles/texlive/"
 
 	local tl_dev
-	if ver_test -lt 2023; then
+	# If the version is less than 2023 and the package is the
+	# dev-texlive category, we fallback to the old SRC_URI layout. With
+	# the 2023 bump, packages outside the dev-texlive category start to
+	# inherit texlive-common.eclass.
+	if ver_test -lt 2023 && [[ ${CATEGORY} == dev-texlive ]]; then
 		local texlive_lt_2023_devs=( zlogene dilfridge sam )
 		local tl_uri_suffix="-${PV}.${tl_pkgext}"
 

@@ -6,11 +6,13 @@ EAPI=8
 inherit texlive-common libtool prefix tmpfiles
 
 TEXMFD_VERSION="11"
+MY_SOURCE_FILE="texlive-${PV#*_p}-source.tar.xz"
 
 DESCRIPTION="Path searching library for TeX-related files"
 HOMEPAGE="https://tug.org/texlive/"
 SRC_URI="
-	mirror://ctan/Source//texlive-${PV#*_p}-source.tar.xz
+	mirror://ctan/Source/${MY_SOURCE_FILE}
+	https://dev.gentoo.org/~flow/distfiles/texlive/${MY_SOURCE_FILE}
 	https://dev.gentoo.org/~sam/distfiles/texlive/${PN}-texmf.d-${TEXMFD_VERSION}.tar.xz
 "
 
@@ -25,14 +27,10 @@ TL_REVISION=68516
 EXTRA_TL_MODULES="kpathsea.r${TL_REVISION}"
 EXTRA_TL_DOC_MODULES="kpathsea.doc.r${TL_REVISION}"
 
-for i in ${EXTRA_TL_MODULES} ; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri EXTRA_TL_MODULES
 
 SRC_URI="${SRC_URI} doc? ( "
-for i in ${EXTRA_TL_DOC_MODULES} ; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri EXTRA_TL_DOC_MODULES
 SRC_URI="${SRC_URI} ) "
 
 TEXMF_PATH=/usr/share/texmf-dist

@@ -3,9 +3,11 @@
 
 EAPI=8
 
+inherit texlive-common
+
 DESCRIPTION="8-bit Implementation of BibTeX 0.99 with a Very Large Capacity"
 HOMEPAGE="https://tug.org/texlive/"
-SRC_URI="mirror://ctan/Source//texlive-${PV#*_p}-source.tar.xz"
+SRC_URI="mirror://ctan/Source/texlive-${PV#*_p}-source.tar.xz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -25,14 +27,10 @@ TL_REVISION=66186
 EXTRA_TL_MODULES="bibtex8.r${TL_REVISION} bibtexu.r${TL_REVISION}"
 EXTRA_TL_DOC_MODULES="bibtex8.doc.r${TL_REVISION} bibtexu.doc.r${TL_REVISION}"
 
-for i in ${EXTRA_TL_MODULES} ; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri EXTRA_TL_MODULES
 
 SRC_URI="${SRC_URI} doc? ( "
-for i in ${EXTRA_TL_DOC_MODULES} ; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri EXTRA_TL_DOC_MODULES
 SRC_URI="${SRC_URI} ) "
 
 src_configure() {
