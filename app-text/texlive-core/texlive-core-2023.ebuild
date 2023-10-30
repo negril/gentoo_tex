@@ -362,7 +362,7 @@ DEPEND="
 RDEPEND="
 	${COMMON_DEPEND}
 	>=app-text/ps2pkm-1.8_p20230311
-	>=app-text/dvipsk-5.997
+	>=app-text/dvipsk-2023.1_p20230311
 	>=dev-tex/bibtexu-3.71_p20170524
 	virtual/perl-Getopt-Long
 	dev-perl/File-HomeDir
