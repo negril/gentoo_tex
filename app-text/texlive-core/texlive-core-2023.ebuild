@@ -363,7 +363,7 @@ RDEPEND="
 	${COMMON_DEPEND}
 	>=app-text/ps2pkm-1.8_p20230311
 	>=app-text/dvipsk-2023.1_p20230311
-	>=dev-tex/bibtexu-3.71_p20170524
+	>=dev-tex/bibtexu-4.00_p20230311
 	virtual/perl-Getopt-Long
 	dev-perl/File-HomeDir
 	dev-perl/Log-Dispatch
