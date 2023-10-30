@@ -30,7 +30,7 @@ RDEPEND="${DEPEND}
 	sys-apps/texinfo
 	app-text/t1utils
 	>=app-text/lcdf-typetools-2.92[kpathsea]
-	truetype? ( >=app-text/ttf2pk2-2.0_p20150521 )
+	truetype? ( >=app-text/ttf2pk2-2.0_p20230311 )
 	app-text/ps2eps
 	png? ( app-text/dvipng )
 	X? ( >=app-text/xdvik-22.87 )
