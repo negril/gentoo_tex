@@ -3914,8 +3914,8 @@ LICENSE="Apache-2.0 Artistic BSD BSD-2 CC-BY-2.0 CC-BY-4.0 CC-BY-SA-3.0 CC-BY-SA
 SLOT="0/2023"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris"
 DEPEND="
-	>=dev-texlive/texlive-fontsrecommended-2019
-	>=dev-texlive/texlive-pictures-2019
+	>=dev-texlive/texlive-fontsrecommended-${TL_PV}
+	>=dev-texlive/texlive-pictures-${TL_PV}
 	dev-perl/Spreadsheet-ParseExcel
 "
 RDEPEND="
