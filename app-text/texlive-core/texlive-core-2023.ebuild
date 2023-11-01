@@ -255,6 +255,7 @@ TL_CORE_EXTRA_DOC_MODULES="
 	texlive-scripts.doc.r68642
 "
 TEXLIVE_MODULE_BINSCRIPTS="
+	texmf-dist/scripts/make4ht/make4ht
 	texmf-dist/scripts/texlive/fmtutil.pl
 	texmf-dist/scripts/texlive/fmtutil-sys.sh
 	texmf-dist/scripts/texlive/fmtutil-user.sh
