@@ -35,13 +35,22 @@ SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~x64-macos"
 IUSE="doc java source"
 
-RDEPEND="app-text/ghostscript-gpl
-	media-gfx/imagemagick
-	dev-libs/kpathsea
-	java? ( >=virtual/jre-1.8:* )"
+COMMON_DEPEND="
+	dev-libs/kpathsea:=
+"
 
-DEPEND="dev-libs/kpathsea
-	java? ( >=virtual/jdk-1.8:* )"
+RDEPEND="
+	${COMMON_DEPEND}
+	app-text/ghostscript-gpl
+	dev-lang/perl
+	media-gfx/imagemagick
+	java? ( >=virtual/jre-1.8:* )
+"
+
+DEPEND="
+	${COMMON_DEPEND}
+	java? ( >=virtual/jdk-1.8:* )
+"
 
 BDEPEND="virtual/pkgconfig"
 
