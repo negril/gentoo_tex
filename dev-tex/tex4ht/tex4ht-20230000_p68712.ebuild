@@ -55,8 +55,7 @@ DEPEND="
 BDEPEND="virtual/pkgconfig"
 
 src_prepare() {
-	mkdir texmf || die
-	cp -a "${WORKDIR}/texmf-dist/"* texmf/ || die
+	mv texmf-dist texmf || die
 	default
 	cd "${S}/texmf/tex4ht/base/unix" || die
 	sed -i \
