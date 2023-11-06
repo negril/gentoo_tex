@@ -5,38 +5,34 @@ EAPI=8
 
 inherit texlive-common
 
+TL_VERSION=$(ver_cut 1)
 DESCRIPTION="DVI-to-PostScript translator"
 HOMEPAGE="https://tug.org/texlive/"
-SRC_URI="mirror://ctan/Source//texlive-${PV#*_p}-source.tar.xz"
+SRC_URI="mirror://ctan/Source/texlive-${TL_VERSION}-source.tar.xz"
 
-TL_REVISION=66203
-EXTRA_TL_MODULES="dvips.r${TL_REVISION}"
-EXTRA_TL_DOC_MODULES="dvips.doc.r${TL_REVISION}"
+DVIPS_REVISION=$(ver_cut 3)
+EXTRA_TL_MODULES="dvips.r${DVIPS_REVISION}"
+EXTRA_TL_DOC_MODULES="dvips.doc.r${DVIPS_REVISION}"
 
-for i in ${EXTRA_TL_MODULES} ; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
+texlive-common_append_to_src_uri EXTRA_TL_MODULES
 
-SRC_URI="${SRC_URI} doc? ( "
-for i in ${EXTRA_TL_DOC_MODULES} ; do
-	SRC_URI="${SRC_URI} mirror://ctan/tlnet/archive/${i}.tar.xz"
-done
-SRC_URI="${SRC_URI} ) "
+SRC_URI+=" doc? ( "
+texlive-common_append_to_src_uri EXTRA_TL_DOC_MODULES
+SRC_URI+=" ) "
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~alpha amd64 arm arm64 hppa ~ia64 ~loong ~mips ppc ppc64 ~riscv ~s390 sparc x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris"
 IUSE="doc source"
 
 DEPEND=">=dev-libs/kpathsea-6.2.1:="
 RDEPEND="${DEPEND}"
 BDEPEND="virtual/pkgconfig"
 
-S=${WORKDIR}/texlive-${PV#*_p}-source/texk/${PN}
+S="${WORKDIR}/texlive-${TL_VERSION}-source/texk/${PN}"
 
 src_configure() {
-	econf \
-		--with-system-kpathsea
+	econf --with-system-kpathsea
 }
 
 src_install() {
