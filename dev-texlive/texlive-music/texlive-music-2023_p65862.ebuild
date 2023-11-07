@@ -1,0 +1,111 @@
+# Copyright 1999-2023 Gentoo Authors
+# Distributed under the terms of the GNU General Public License v2
+
+EAPI="8"
+
+TL_PV="2023"
+TEXLIVE_MODULE_CONTENTS="
+	abc.r41157
+	autosp.r58211
+	bagpipe.r34393
+	chordbars.r49569
+	chordbox.r51000
+	collection-latex.r63515
+	ddphonism.r52009
+	figbas.r28943
+	gchords.r29803
+	gtrcrd.r32484
+	guitar.r32258
+	guitarchordschemes.r54512
+	guitartabs.r48102
+	harmony.r15878
+	latex4musicians.r49759
+	leadsheets.r61504
+	lilyglyphs.r56473
+	lyluatex.r66880
+	m-tx.r64182
+	musical.r54758
+	musicography.r68220
+	musixguit.r21649
+	musixtex.r68484
+	musixtex-fonts.r65517
+	musixtnt.r40307
+	octave.r66115
+	piano.r21574
+	pmx.r65926
+	pmxchords.r39249
+	recorder-fingering.r68595
+	songbook.r18136
+	songproj.r66704
+	songs.r51494
+	xpiano.r61719
+	collection-music.r65862
+"
+TEXLIVE_MODULE_DOC_CONTENTS="
+	abc.doc.r41157
+	autosp.doc.r58211
+	bagpipe.doc.r34393
+	chordbars.doc.r49569
+	chordbox.doc.r51000
+	ddphonism.doc.r52009
+	figbas.doc.r28943
+	gchords.doc.r29803
+	gtrcrd.doc.r32484
+	guitar.doc.r32258
+	guitarchordschemes.doc.r54512
+	guitartabs.doc.r48102
+	harmony.doc.r15878
+	latex4musicians.doc.r49759
+	leadsheets.doc.r61504
+	lilyglyphs.doc.r56473
+	lyluatex.doc.r66880
+	m-tx.doc.r64182
+	musical.doc.r54758
+	musicography.doc.r68220
+	musixguit.doc.r21649
+	musixtex.doc.r68484
+	musixtex-fonts.doc.r65517
+	musixtnt.doc.r40307
+	octave.doc.r66115
+	piano.doc.r21574
+	pmx.doc.r65926
+	pmxchords.doc.r39249
+	recorder-fingering.doc.r68595
+	songbook.doc.r18136
+	songproj.doc.r66704
+	songs.doc.r51494
+	xpiano.doc.r61719
+"
+TEXLIVE_MODULE_SRC_CONTENTS="
+	abc.source.r41157
+	guitar.source.r32258
+	lilyglyphs.source.r56473
+	musixtex.source.r68484
+	songbook.source.r18136
+	songproj.source.r66704
+	songs.source.r51494
+	xpiano.source.r61719
+"
+inherit texlive-module
+DESCRIPTION="TeXLive Music packages"
+RESTRICT="mirror"
+
+LICENSE="BSD FDL-1.3 GPL-1 GPL-2 LGPL-2.1 LPPL-1.2 LPPL-1.3 LPPL-1.3c MIT"
+SLOT="0/2023"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~loong ~mips ~ppc ~ppc64 ~riscv ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x64-solaris"
+DEPEND="
+	>=dev-texlive/texlive-latex-2019
+"
+RDEPEND="
+	${DEPEND}
+"
+
+TEXLIVE_MODULE_BINSCRIPTS="
+	texmf-dist/scripts/musixtex/musixflx.lua
+	texmf-dist/scripts/musixtex/musixtex.lua
+	texmf-dist/scripts/m-tx/m-tx.lua
+	texmf-dist/scripts/pmxchords/pmxchords.lua
+	texmf-dist/scripts/lilyglyphs/lily-glyph-commands.py
+	texmf-dist/scripts/lilyglyphs/lily-image-commands.py
+	texmf-dist/scripts/lilyglyphs/lily-rebuild-pdfs.py
+"
