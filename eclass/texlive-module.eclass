@@ -72,8 +72,7 @@
 # e.g. for enabling/disabling a feature
 
 case ${EAPI} in
-	7) ;;
-	8) ;;
+	7|8) ;;
 	*) die "${ECLASS}: EAPI ${EAPI:-0} not supported" ;;
 esac
 
