@@ -155,7 +155,8 @@ texlive-module_src_unpack() {
 # @DESCRIPTION:
 # Creates/appends to a format.${PN}.cnf file for fmtutil.
 # It parses the AddFormat directive of tlpobj files to create it.
-# This will make fmtutil generate the formats when asked and allow the remaining src_compile phase to build the formats.
+# This will make fmtutil generate the formats when asked and allow the remaining
+# src_compile phase to build the formats.
 
 texlive-module_add_format() {
 	local name engine mode patterns options
@@ -405,7 +406,7 @@ texlive-module_src_install() {
 	if [[ -n ${TEXLIVE_MODULE_BINLINKS} ]] ; then
 		dodir "/usr/bin"
 		for i in ${TEXLIVE_MODULE_BINLINKS} ; do
-			[[ -f ${ED}/usr/bin/${i%:*} ]] || die "Trying to install an invalid BINLINK. This should not happen. Please file a bug."
+			[[ -f ${ED}/usr/bin/${i%:*} ]] || die "Trying to install an invalid BINLINK ${i%:*}. This should not happen. Please file a bug."
 			dosym "${i%:*}" "/usr/bin/${i#*:}"
 		done
 	fi
@@ -416,7 +417,8 @@ texlive-module_src_install() {
 # @FUNCTION: texlive-module_pkg_postinst
 # @DESCRIPTION:
 # exported function:
-# Run texmf-update to ensure the tex installation is consistent with the installed texmf trees.
+# Run texmf-update to ensure the tex installation is consistent with the
+# installed texmf trees.
 
 texlive-module_pkg_postinst() {
 	etexmf-update
@@ -426,7 +428,8 @@ texlive-module_pkg_postinst() {
 # @FUNCTION: texlive-module_pkg_postrm
 # @DESCRIPTION:
 # exported function:
-# Run texmf-update to ensure the tex installation is consistent with the installed texmf trees.
+# Run texmf-update to ensure the tex installation is consistent with the
+# installed texmf trees.
 
 texlive-module_pkg_postrm() {
 	etexmf-update

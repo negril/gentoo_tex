@@ -18,7 +18,7 @@ case ${EAPI} in
 	7)
 		inherit eapi8-dosym
 		dosym(){ dosym8 "$@"; }
-		;; # BUG
+		;;
 	8) ;;
 	*) die "${ECLASS}: EAPI ${EAPI:-0} not supported" ;;
 esac
@@ -26,37 +26,39 @@ esac
 if [[ -z ${_TEXLIVE_COMMON_ECLASS} ]]; then
 _TEXLIVE_COMMON_ECLASS=1
 
-# BUG
-TEXMF_PATH=/usr/share/texmf-dist
-# TEXMF_DIST_PATH=/usr/share/texmf-dist
-# TEXMF_VAR_PATH=/var/lib/texmf
-
-TEXDIR=
-TEXMFDIST=
-TEXMFSYSVAR=
-TEXMFSYSCONFIG=
-TEXMFLOCAL=
-TEXMFVAR=
-
 # @FUNCTION: texlive-common_handle_config_files
 # @DESCRIPTION:
 # Has to be called in src_install after having installed the files in ${D}
-# This function will move the relevant files to /etc/texmf and symlink them from their original location.
-# This is to allow easy update of texlive's configuration
-# VIA app-text/texlive-core eclass/texlive-module.eclass
+# This function will move the relevant files to /etc/texmf and symlink them
+# from their original location. This is to allow easy update of texlive's
+# configuration.
+# Called by app-text/texlive-core and texlive-module.eclass.
 texlive-common_handle_config_files() {
+	local texmf_path
+	# Starting with TeX Live 2023, we install in texmf-dist, where a
+	# distribution provided TeX Live installation is supposed to be,
+	# instead of texmf.
+	if ver_test -ge 2023; then
+		texmf_path=/usr/share/texmf-dist
+	else
+		texmf_path=/usr/share/texmf
+	fi
+
 	# Handle config files properly
-	[[ -d ${ED}${TEXMF_PATH} ]] || return
-	cd "${ED}${TEXMF_PATH}" || die
+	[[ -d ${ED}${texmf_path} ]] || return
+	cd "${ED}${texmf_path}" || die
 
 	while read -r f; do
 		if [[ ${f#*config} != "${f}" || ${f#doc} != "${f}" || ${f#source} != "${f}" || ${f#tex} != "${f}" ]] ; then
 			continue
 		fi
-		dodir "/etc/texmf/$(dirname "${f}").d"
-		einfo "Moving (and symlinking) ${EPREFIX}${TEXMF_PATH}/${f} to ${EPREFIX}/etc/texmf/$(dirname "${f}").d"
-		mv "${ED}/${TEXMF_PATH}/${f}" "${ED}/etc/texmf/$(dirname "${f}").d" || die "mv ${f} failed."
-		dosym -r "/etc/texmf/$(dirname "${f}").d/$(basename "${f}")" "${TEXMF_PATH}/${f}"
+		local rel_dir
+		rel_dir="$(dirname "${f}")"
+
+		dodir "/etc/texmf/${rel_dir}.d"
+		einfo "Moving (and symlinking) ${EPREFIX}${texmf_path}/${f} to ${EPREFIX}/etc/texmf/${rel_dir}.d"
+		mv "${ED}/${texmf_path}/${f}" "${ED}/etc/texmf/${rel_dir}.d" || die "mv ${f} failed."
+		dosym -r "/etc/texmf/${rel_dir}).d/$(basename "${f}")" "${texmf_path}/${f}"
 	done < <(find . -name '*.cnf' -type f -o -name '*.cfg' -type f | sed -e "s:\./::g")
 }
 
@@ -64,7 +66,7 @@ texlive-common_handle_config_files() {
 # @DESCRIPTION:
 # Return if a file is present in the texmf tree
 # Call it from the directory containing texmf and texmf-dist
-# VIA app-text/texlive-core
+# Called by app-text/texlive-core.
 texlive-common_is_file_present_in_texmf() {
 	local mark="${T}/${1}.found"
 	if [[ -d texmf ]]; then
@@ -88,7 +90,7 @@ texlive-common_is_file_present_in_texmf() {
 # ( Arguments are switched because texlinks main function sends them switched )
 # This function should not be called from an ebuild, prefer etexlinks that will
 # also do the fmtutil file parsing.
-# VIA eclass/texlive-common.eclass eclass/texlive-module.eclass
+# Called by texlive-common.eclass and texlive-module.eclass.
 texlive-common_do_symlinks() {
 	while [[ ${#} != 0 ]]; do
 		case ${1} in
@@ -125,7 +127,7 @@ texlive-common_do_symlinks() {
 # the same dir as the source)
 # Also, as this eclass must not depend on a tex distribution to be installed we
 # cannot use texlinks from here.
-# VIA eclass/texlive-module.eclass
+# Called by texlive-module.eclass.
 etexlinks() {
 	# Install symlinks from formats to engines
 	texlive-common_do_symlinks $(sed '/^[      ]*#/d; /^[      ]*$/d' "$1" | awk '{print $1, $2}')
@@ -136,7 +138,7 @@ etexlinks() {
 # @DESCRIPTION:
 # Symlinks a script from the texmf tree to /usr/bin. Requires permissions to be
 # correctly set for the file that it will point to.
-# VIA app-text/epspdf eclass/texlive-module.eclass
+# Called by app-text/epspdf and texlive-module.eclass.
 dobin_texmf_scripts() {
 	while [[ ${#} -gt 0 ]] ; do
 		local trg
@@ -153,7 +155,8 @@ dobin_texmf_scripts() {
 # Runs texmf-update if it is available and prints a warning otherwise. This
 # function helps in factorizing some code.  Useful in ebuilds' pkg_postinst and
 # pkg_postrm phases.
-# VIA app-text/dvipsk app-text/texlive-core dev-libs/kpathsea eclass/texlive-module.eclass
+# Called by app-text/dvipsk, app-text/texlive-core, dev-libs/kpathsea, and
+# texlive-module.eclass.
 etexmf-update() {
 	if has_version 'app-text/texlive-core' ; then
 		if [[ -z ${ROOT} && -x "${EPREFIX}"/usr/sbin/texmf-update ]] ; then
@@ -171,7 +174,6 @@ etexmf-update() {
 # Runs fmtutil-sys if it is available and prints a warning otherwise. This
 # function helps in factorizing some code. Used in ebuilds' pkg_postinst to
 # force a rebuild of TeX formats.
-# VIA
 efmtutil-sys() {
 	if has_version 'app-text/texlive-core' ; then
 		if [[ -z ${ROOT} && -x "${EPREFIX}"/usr/bin/fmtutil-sys ]] ; then
@@ -225,5 +227,3 @@ texlive-common_append_to_src_uri() {
 }
 
 fi
-
-unset TEXDIR TEXMFDIST TEXMFSYSVAR TEXMFSYSCONFIG TEXMFLOCAL TEXMFVAR
