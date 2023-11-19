@@ -17,8 +17,8 @@ RESTRICT="mirror"
 
 SRC_URI="
 	mirror://ctan/Source/${MY_P}.tar.xz
-	https://github.com/Flowdalic/texlive-source/commit/9d53bc46fc5259542e32299ec695df375a4f54c9.patch
-		-> texlive-2023-drop-luazlip-version-check.patch
+	https://github.com/Flowdalic/texlive-source/commit/8be4094fa5dfcfbeace5d16a481ae97fdf816727.patch
+		-> texlive-2023-drop-luazlib-version-check.patch
 "
 
 # We ship binextra collection alongside
@@ -419,7 +419,8 @@ src_prepare() {
 	# eapply "${FILESDIR}"/${P}-clang-16.patch
 	# eapply "${WORKDIR}"/${P}-CVE-2023-32700.patch
 
-	eapply "${DISTDIR}/texlive-2023-drop-luazlip-version-check.patch"
+	# https://github.com/TeX-Live/texlive-source/pull/62
+	eapply "${DISTDIR}/texlive-2023-drop-luazlib-version-check.patch"
 
 	default
 
