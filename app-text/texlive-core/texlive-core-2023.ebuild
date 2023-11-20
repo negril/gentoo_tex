@@ -16,7 +16,7 @@ LICENSE="Apache-2.0 Artistic BSD BSD-2 FDL-1.3 GPL-1 GPL-2 GPL-3 GPL-3+ LGPL-3 L
 RESTRICT="mirror"
 
 SRC_URI="
-	mirror://ctan/Source/${MY_P}.tar.xz
+	mirror://ctan/systems/texlive/Source/${MY_P}.tar.xz
 	https://github.com/Flowdalic/texlive-source/commit/8be4094fa5dfcfbeace5d16a481ae97fdf816727.patch
 		-> texlive-2023-drop-luazlib-version-check.patch
 "
