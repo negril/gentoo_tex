@@ -494,8 +494,8 @@ src_configure() {
 		--disable-dvipng
 		--disable-dvipsk
 		--disable-lcdf-typetools
-		--disable-ps2pk
-		--disable-ttf2pk2
+		--disable-ps2pk # app-text/ps2pkm
+		--disable-ttf2pk2 # app-text/dvipsk
 		--disable-tex4htk
 		--disable-cjkutils
 		--disable-xdvik
@@ -567,7 +567,7 @@ src_compile() {
 	cd "${BUILDDIR}" || die
 	tc-export CC CXX AR RANLIB
 
-	emake AR="$(tc-getAR)" SHELL="${EPREFIX}"/bin/sh texmf="${EPREFIX}"${TEXMF_PATH:-/usr/share/texmf-dist}
+	emake AR="$(tc-getAR)" SHELL="${EPREFIX}"/bin/sh texmf="${EPREFIX}${TEXMFDIST}"
 
 	cd "${S}" || die
 	# Mimic updmap --syncwithtrees to enable only fonts installed
@@ -586,14 +586,14 @@ src_compile() {
 
 src_install() {
 	cd "${BUILDDIR}" || die
-	dodir ${TEXMF_PATH:-/usr/share/texmf-dist}/web2c
+	dodir "${TEXMFDIST}/web2c"
 
-	emake DESTDIR="${D}" texmf="${ED}${TEXMF_PATH:-/usr/share/texmf-dist}" run_texlinks="true" run_mktexlsr="true" install
+	emake DESTDIR="${D}" texmf="${ED}${TEXMFDIST}" run_texlinks="true" run_mktexlsr="true" install
 
 	cd "${S}" || die
-	dodir /usr/share # just in case
-	cp -pR texmf-dist "${ED}/usr/share/" || die "failed to install texmf trees"
-	cp -pR "${WORKDIR}"/tlpkg "${ED}/usr/share/" || die "failed to install tlpkg files"
+	dodir "${TEXMFDIST}" # just in case
+	cp -pR texmf-dist "${ED}${TEXMFROOT}/" || die "failed to install texmf trees"
+	cp -pR "${WORKDIR}"/tlpkg "${ED}${TEXMFDIST}/" || die "failed to install tlpkg files"
 
 	# When X is disabled mf-nowin doesn't exist but some scripts expect it to
 	# exist. Instead, it is called mf, so we symlink it to please everything.
@@ -615,23 +615,23 @@ src_install() {
 	cd "${S}/texk/web2c" || die
 	dodoc ChangeLog NEWS PROJECTS README
 
-	use doc || rm -rf "${ED}/usr/share/texmf-dist/doc"
+	use doc || rm -rf "${ED}${TEXMFDIST}/doc"
 
 	dodir /etc/env.d
-	echo 'CONFIG_PROTECT_MASK="/etc/texmf/web2c /etc/texmf/language.dat.d /etc/texmf/language.def.d /etc/texmf/updmap.d"' > "${ED}/etc/env.d/98texlive"
-	# populate /etc/texmf
-	keepdir /etc/texmf/web2c
+	echo "CONFIG_PROTECT_MASK=\"${TEXMFSYSCONFIG}/web2c ${TEXMFSYSCONFIG}/language.dat.d ${TEXMFSYSCONFIG}/language.def.d ${TEXMFSYSCONFIG}/updmap.d\"" > "${ED}/etc/env.d/98texlive"
+	# populate ${TEXMFSYSCONFIG}
+	keepdir ${TEXMFSYSCONFIG}/web2c
 
 	# take care of updmap.cfg and language.d files
-	keepdir /etc/texmf/{updmap.d,language.dat.d,language.def.d,language.dat.lua.d}
+	keepdir ${TEXMFSYSCONFIG}/{updmap.d,language.dat.d,language.def.d,language.dat.lua.d}
 
-	mv "${ED}${TEXMF_PATH}/web2c/updmap.cfg" "${ED}/etc/texmf/updmap.d/00updmap.cfg" || die "moving updmap.cfg failed"
+	mv "${ED}${TEXMFDIST}/web2c/updmap.cfg" "${ED}${TEXMFSYSCONFIG}/updmap.d/00updmap.cfg" || die "moving updmap.cfg failed"
 
-	# Remove fmtutil.cnf, it will be regenerated from /etc/texmf/fmtutil.d files
+	# Remove fmtutil.cnf, it will be regenerated from ${TEXMFSYSCONFIG}/fmtutil.d files
 	# by texmf-update
-	rm -f "${ED}${TEXMF_PATH}/web2c/fmtutil.cnf" || die
+	rm -f "${ED}${TEXMFDIST}/web2c/fmtutil.cnf" || die
 	# Remove bundled and invalid updmap.cfg
-	rm -f "${ED}/usr/share/texmf-dist/web2c/updmap.cfg" || die
+	rm -f "${ED}${TEXMFDIST}/web2c/updmap.cfg" || die
 
 	rm -f "${ED}/usr/bin/"{,u}ptex
 
@@ -646,7 +646,7 @@ src_install() {
 
 	texlive-common_handle_config_files
 
-	keepdir /usr/share/texmf-site
+	keepdir "${TEXMFLOCAL}"
 
 	# the virtex symlink is not installed
 	# The links has to be relative, since the targets
@@ -665,7 +665,7 @@ pkg_postinst() {
 	fmtutil-sys --all &> /dev/null
 
 	elog
-	elog "If you have configuration files in ${EPREFIX}/etc/texmf to merge,"
+	elog "If you have configuration files in ${EPREFIX}${TEXMFSYSCONFIG} to merge,"
 	elog "please update them and run ${EPREFIX}/usr/sbin/texmf-update."
 	elog
 

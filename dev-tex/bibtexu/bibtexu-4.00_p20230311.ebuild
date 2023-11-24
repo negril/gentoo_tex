@@ -42,14 +42,12 @@ src_configure() {
 src_install() {
 	emake \
 		DESTDIR="${D}" \
-		csfdir="${EPREFIX}/usr/share/texmf-dist/bibtexu/csf/base" \
-		btdocdir="${EPREFIX}/usr/share/doc/${PF}" \
 		install
 	dodoc 00bibtex8-readme.txt 00bibtex8-history.txt ChangeLog csf/csfile.txt
 
-	dodir /usr/share # just in case
-	cp -pR "${WORKDIR}"/texmf-dist "${ED}/usr/share/" || die "failed to install texmf trees"
+	dodir "${TEXMFDIST}" # just in case
+	cp -pR "${WORKDIR}"/texmf-dist/* "${ED}${TEXMFDIST}/" || die "failed to install texmf trees"
 	if use source ; then
-		cp -pR "${WORKDIR}"/tlpkg "${ED}/usr/share/" || die "failed to install tlpkg files"
+		cp -pR "${WORKDIR}"/tlpkg "${ED}${TEXMFROOT}/" || die "failed to install tlpkg files"
 	fi
 }

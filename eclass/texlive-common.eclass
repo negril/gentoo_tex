@@ -26,27 +26,52 @@ esac
 if [[ -z ${_TEXLIVE_COMMON_ECLASS} ]]; then
 _TEXLIVE_COMMON_ECLASS=1
 
+# @ECLASS_VARIABLE: TEXMFROOT
+# @DESCRIPTION:
+# root of the installation
+TEXMFROOT="/usr/share"
+
+# @ECLASS_VARIABLE: TEXMFDIST
+# @DESCRIPTION:
+# files from TEX Live
+# TEXMFROOT/texmf-dist
+TEXMFDIST="${TEXMFROOT}/texmf-dist"
+
+# @ECLASS_VARIABLE: TEXMFLOCAL
+# @DESCRIPTION:
+# site-wide additions
+# TEXMFROOT/../texmf-local
+TEXMFLOCAL="${TEXMFROOT}/texmf-site"
+
+# @ECLASS_VARIABLE: TEXMFSYSVAR
+# @DESCRIPTION:
+# cached data
+# TEXMFROOT/texmf-var
+TEXMFSYSVAR="/var/lib/texmf"
+
+# @ECLASS_VARIABLE: TEXMFSYSCONFIG
+# @DESCRIPTION:
+# configuration data
+# TEXMFROOT/texmf-config
+TEXMFSYSCONFIG="/etc/texmf"
+
+# @ECLASS_VARIABLE: VARTEXFONTS
+# @DESCRIPTION:
+# location of generated fonts
+# TEXMFVAR/fonts
+VARTEXFONTS="/var/cache/fonts"
+
 # @FUNCTION: texlive-common_handle_config_files
 # @DESCRIPTION:
 # Has to be called in src_install after having installed the files in ${D}
-# This function will move the relevant files to /etc/texmf and symlink them
+# This function will move the relevant files to TEXMFSYSCONFIG and symlink them
 # from their original location. This is to allow easy update of texlive's
 # configuration.
 # Called by app-text/texlive-core and texlive-module.eclass.
 texlive-common_handle_config_files() {
-	local texmf_path
-	# Starting with TeX Live 2023, we install in texmf-dist, where a
-	# distribution provided TeX Live installation is supposed to be,
-	# instead of texmf.
-	if ver_test -ge 2023; then
-		texmf_path=/usr/share/texmf-dist
-	else
-		texmf_path=/usr/share/texmf
-	fi
-
 	# Handle config files properly
-	[[ -d ${ED}${texmf_path} ]] || return
-	cd "${ED}${texmf_path}" || die
+	[[ -d ${ED}${TEXMFDIST} ]] || return
+	cd "${ED}${TEXMFDIST}" || die
 
 	while read -r f; do
 		if [[ ${f#*config} != "${f}" || ${f#doc} != "${f}" || ${f#source} != "${f}" || ${f#tex} != "${f}" ]] ; then
@@ -55,10 +80,10 @@ texlive-common_handle_config_files() {
 		local rel_dir
 		rel_dir="$(dirname "${f}")"
 
-		dodir "/etc/texmf/${rel_dir}.d"
-		einfo "Moving (and symlinking) ${EPREFIX}${texmf_path}/${f} to ${EPREFIX}/etc/texmf/${rel_dir}.d"
-		mv "${ED}/${texmf_path}/${f}" "${ED}/etc/texmf/${rel_dir}.d" || die "mv ${f} failed."
-		dosym -r "/etc/texmf/${rel_dir}).d/$(basename "${f}")" "${texmf_path}/${f}"
+		dodir "${TEXMFSYSCONFIG}/${rel_dir}.d"
+		einfo "Moving (and symlinking) ${EPREFIX}${TEXMFDIST}/${f} to ${EPREFIX}${TEXMFSYSCONFIG}/${rel_dir}.d"
+		mv "${ED}/${TEXMFDIST}/${f}" "${ED}${TEXMFSYSCONFIG}/${rel_dir}.d" || die "mv ${f} failed."
+		dosym -r "${TEXMFSYSCONFIG}/${rel_dir}).d/$(basename "${f}")" "${TEXMFDIST}/${f}"
 	done < <(find . -name '*.cnf' -type f -o -name '*.cfg' -type f | sed -e "s:\./::g")
 }
 
@@ -84,7 +109,7 @@ texlive-common_is_file_present_in_texmf() {
 # @DESCRIPTION:
 # Mimic the install_link function of texlinks
 #
-# Should have the same behavior as the one in /usr/bin/texlinks
+# Should have the same behavior as the one in TEXMFROOT/../bin/texlinks
 # except that it is under the control of the package manager
 # Note that $1 corresponds to $src and $2 to $dest in this function
 # ( Arguments are switched because texlinks main function sends them switched )
@@ -92,6 +117,8 @@ texlive-common_is_file_present_in_texmf() {
 # also do the fmtutil file parsing.
 # Called by texlive-common.eclass and texlive-module.eclass.
 texlive-common_do_symlinks() {
+	local texmfbinroot
+	texmfbinroot=$(realpath "${TEXMFROOT}/../bin")
 	while [[ ${#} != 0 ]]; do
 		case ${1} in
 			cont-??|metafun|mptopdf)
@@ -103,11 +130,11 @@ texlive-common_do_symlinks() {
 			*)
 				if [[ ${1} == "${2}" ]]; then
 					einfo "Symlink ${1} -> ${2} skipped"
-				elif [[ -e ${ED}/usr/bin/${1} || -L ${ED}/usr/bin/${1} ]]; then
+				elif [[ -e ${ED}${texmfbinroot}/${1} || -L ${ED}${texmfbinroot}/${1} ]]; then
 					einfo "Symlink ${1} skipped (file exists)"
 				else
 					einfo "Making symlink from ${1} to ${2}"
-					dosym "${2}" "/usr/bin/${1}"
+					dosym "${2}" "${texmfbinroot}/${1}"
 				fi
 				;;
 		esac
@@ -136,16 +163,18 @@ etexlinks() {
 # @FUNCTION: dobin_texmf_scripts
 # @USAGE: <file1> [file2] ...
 # @DESCRIPTION:
-# Symlinks a script from the texmf tree to /usr/bin. Requires permissions to be
+# Symlinks a script from the texmf tree to TEXMFROOT/../bin. Requires permissions to be
 # correctly set for the file that it will point to.
 # Called by app-text/epspdf and texlive-module.eclass.
 dobin_texmf_scripts() {
+	local texmfbinroot
+	texmfbinroot=$(realpath "${TEXMFROOT}/../bin")
 	while [[ ${#} -gt 0 ]] ; do
 		local trg
 		trg=$(basename "${1}" | sed 's,\.[^/]*$,,' | tr '[:upper:]' '[:lower:]')
 		einfo "Installing ${1} as ${trg} bin wrapper"
-		[[ -x ${ED}/usr/share/${1} ]] || die "Trying to install a non existing or non executable symlink to /usr/bin: ${1}"
-		dosym "../share/${1}" "/usr/bin/${trg}"
+		[[ -x ${ED}${TEXMFROOT}/${1} ]] || die "Trying to install a non existing or non executable symlink to ${texmfbinroot}: ${ED}${TEXMFROOT}/${1}"
+		dosym -r "${TEXMFROOT}/${1}" "${texmfbinroot}/${trg}"
 		shift
 	done
 }
@@ -176,9 +205,9 @@ etexmf-update() {
 # force a rebuild of TeX formats.
 efmtutil-sys() {
 	if has_version 'app-text/texlive-core' ; then
-		if [[ -z ${ROOT} && -x "${EPREFIX}"/usr/bin/fmtutil-sys ]] ; then
+		if [[ -z ${ROOT} && -x "${EPREFIX}${TEXMFROOT}/../bin/fmtutil-sys" ]] ; then
 			einfo "Rebuilding formats"
-			"${EPREFIX}"/usr/bin/fmtutil-sys --all &> /dev/null || die
+			"${EPREFIX}${TEXMFROOT}/../bin/fmtutil-sys" --all &> /dev/null || die
 		else
 			ewarn "Cannot run fmtutil-sys for some reason."
 			ewarn "Your formats might be inconsistent with your installed ${PN} version"

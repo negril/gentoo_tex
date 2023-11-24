@@ -33,8 +33,6 @@ SRC_URI="${SRC_URI} doc? ( "
 texlive-common_append_to_src_uri EXTRA_TL_DOC_MODULES
 SRC_URI="${SRC_URI} ) "
 
-TEXMF_PATH=/usr/share/texmf-dist
-
 src_prepare() {
 	default
 	cd "${WORKDIR}/texlive-${PV#*_p}-source" || die
@@ -57,7 +55,7 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" web2cdir="${EPREFIX}/usr/share/texmf-dist/web2c" install
+	emake DESTDIR="${D}" install
 	find "${D}" -name '*.la' -delete || die
 
 	dodir /usr/share # just in case
@@ -67,22 +65,22 @@ src_install() {
 	fi
 
 	# Take care of fmtutil.cnf and texmf.cnf
-	dodir /etc/texmf/{fmtutil.d,texmf.d}
+	dodir "${TEXMFDIST}/"{fmtutil.d,texmf.d}
 
 	# Remove default texmf.cnf to ship our own, greatly based on texlive dvd's
 	# texmf.cnf
-	# It will also be generated from /etc/texmf/texmf.d files by texmf-update
-	rm -f "${ED}${TEXMF_PATH}/web2c/texmf.cnf" || die
+	# It will also be generated from ${TEXMFDIST}/texmf.d files by texmf-update
+	rm -f "${ED}${TEXMFDIST}/web2c/texmf.cnf" || die
 
-	insinto /etc/texmf/texmf.d
+	insinto "${TEXMFDIST}/texmf.d"
 	doins "${WORKDIR}/texmf.d/"*.cnf
 
-	# Remove fmtutil.cnf, it will be regenerated from /etc/texmf/fmtutil.d files
+	# Remove fmtutil.cnf, it will be regenerated from ${TEXMFDIST}/fmtutil.d files
 	# by texmf-update
-	rm -f "${ED}${TEXMF_PATH}/web2c/fmtutil.cnf" || die
+	rm -f "${ED}${TEXMFDIST}/web2c/fmtutil.cnf" || die
 
-	dosym ../../../../etc/texmf/web2c/fmtutil.cnf ${TEXMF_PATH}/web2c/fmtutil.cnf
-	dosym ../../../../etc/texmf/web2c/texmf.cnf ${TEXMF_PATH}/web2c/texmf.cnf
+	dosym "../../../..${TEXMFDIST}/web2c/fmtutil.cnf" "${TEXMFDIST}/web2c/fmtutil.cnf"
+	dosym "../../../..${TEXMFDIST}/web2c/texmf.cnf" "${TEXMFDIST}/web2c/texmf.cnf"
 
 	newsbin "${S}/texmf-update" texmf-update
 

@@ -36,12 +36,12 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" prologdir="${EPREFIX}/usr/share/texmf-dist/dvips/base" install
+	emake DESTDIR="${D}" install
 
-	dodir /usr/share # just in case
-	cp -pR "${WORKDIR}"/texmf-dist "${ED}/usr/share/" || die "failed to install texmf trees"
+	dodir "${TEXMFDIST}" # just in case
+	cp -pR "${WORKDIR}"/texmf-dist/* "${ED}${TEXMFDIST}/" || die "failed to install texmf trees"
 	if use source ; then
-		cp -pR "${WORKDIR}"/tlpkg "${ED}/usr/share/" || die "failed to install tlpkg files"
+		cp -pR "${WORKDIR}"/tlpkg "${ED}${TEXMFDIST}/" || die "failed to install tlpkg files"
 	fi
 
 	dodoc AUTHORS ChangeLog NEWS README TODO
